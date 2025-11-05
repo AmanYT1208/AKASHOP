@@ -1,285 +1,199 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>AKA SHOP — Premium Store</title>
-  <style>
-    /* === Simple static dark+gold premium theme === */
-    :root{
-      --bg:#050608;
-      --card:#0f1316;
-      --muted:#9aa3ae;
-      --gold:#e6b83a;
-      --accent:#ffd66b;
-      --radius:12px;
-      --maxw:1100px;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Arial;
-      background: linear-gradient(180deg, var(--bg) 0%, #0b0f12 100%);
-      color:#e9eef6;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      padding:28px;
-      display:flex;
-      justify-content:center;
-    }
-    .wrap{width:100%;max-width:var(--maxw)}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AKA SHOP — Premium Store</title>
 
-    /* Header */
-    header{
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border-radius:16px;
-      padding:18px 22px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      border:1px solid rgba(230,184,58,0.06);
-      margin-bottom:20px;
-    }
-    .brand h1{margin:0;font-size:20px;color:var(--gold);font-weight:800}
-    .brand p{margin:0;color:var(--muted);font-weight:600;font-size:13px}
+<style>
+:root{
+  --bg:#050608;--card:#0f1316;--gold:#e6b83a;--soft:#ffd66b;
+  --muted:#a3a9b2;--radius:12px;
+}
+*{box-sizing:border-box;}
+body{
+  background:var(--bg);font-family:Poppins,Arial;color:white;
+  margin:0;padding:18px;display:flex;justify-content:center;
+}
+.wrap{width:100%;max-width:1000px;}
 
-    /* Layout grid */
-    .grid{display:grid;grid-template-columns:1fr;gap:18px}
-    @media(min-width:980px){ .grid{grid-template-columns: 2fr 420px} }
+/* Header */
+header{
+  background:var(--card);border-radius:16px;padding:18px;
+  border:1px solid rgba(255,255,255,.07);
+}
+h1{margin:0;color:var(--gold);font-size:22px;font-weight:800;}
+.muted{color:var(--muted);font-size:14px}
 
-    /* Card style */
-    .card{
-      background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.008));
-      border-radius:var(--radius);
-      padding:18px;
-      border:1px solid rgba(230,184,58,0.04);
-    }
-    h2{margin:0 0 8px 0;color:var(--gold);font-size:18px}
-    .muted{color:var(--muted);font-size:14px;margin-bottom:12px}
+/* Cards */
+.card{
+  background:var(--card);border-radius:var(--radius);padding:18px;
+  border:1px solid rgba(255,255,255,.05);margin-top:16px;
+}
+h2{color:var(--gold);margin:0 0 8px;font-size:18px;font-weight:700;}
+.big{font-size:26px;font-weight:700;color:var(--soft);margin:10px 0;}
 
-    /* big highlighted price/title */
-    .big{
-      font-size:26px;
-      font-weight:800;
-      color:var(--accent);
-      margin:10px 0 14px;
-    }
+/* Inputs Buttons */
+input{
+  width:65%;padding:10px;border-radius:8px;background:#000;
+  border:1px solid rgba(255,255,255,.2);color:white;
+}
+.btn{
+  background:var(--gold);color:black;text-decoration:none;
+  padding:9px 14px;border-radius:8px;font-weight:700;display:inline-block;
+  margin-top:10px;
+}
+.btn:active{transform:scale(.97);}
 
-    /* Kills coupon row */
-    .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-    .input{
-      background:transparent;
-      border:1px solid rgba(255,255,255,0.06);
-      color:#fff;
-      padding:10px 12px;
-      border-radius:10px;
-      min-width:180px;
-      outline:none;
-    }
-    .btn{
-      background:var(--gold);
-      color:#081227;
-      border:0;
-      padding:10px 14px;
-      border-radius:10px;
-      font-weight:800;
-      cursor:pointer;
-    }
-    .btn:active{transform:translateY(1px)}
+/* Packs */
+.packs,.bot{display:flex;gap:12px;flex-wrap:wrap;}
+.pack,.bot-item{
+  flex:1;background:#0b0e10;padding:14px;border-radius:10px;
+  border:1px solid rgba(255,255,255,.04);text-align:center;
+}
 
-    .error{
-      color:#ff6b6b;
-      font-weight:800;
-      margin-top:10px;
-      display:none;
-    }
-    .final{margin-top:12px;font-weight:800;color:#e9eef6}
+footer{text-align:center;margin-top:20px;color:var(--muted);font-size:14px}
+.error{color:#ff6060;font-size:13px;margin-top:6px;display:none;}
+.final{margin-top:8px;font-weight:800}
 
-    /* Packs (gems & bot) */
-    .packs{display:flex;flex-direction:column;gap:12px}
-    @media(min-width:700px){ .packs{flex-direction:row} }
-    .pack{
-      flex:1;
-      background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));
-      border-radius:10px;padding:14px;border:1px solid rgba(255,214,107,0.03);
-      text-align:center;
-    }
-    .pack h3{margin:0;color:var(--gold);font-weight:800}
-    .old{color:var(--muted);text-decoration:line-through;margin-top:8px}
-    .now{color:var(--accent);font-weight:900;font-size:20px;margin-top:6px}
-
-    /* bot packs */
-    .bot-row{display:flex;flex-direction:column;gap:10px}
-    @media(min-width:900px){ .bot-row{flex-direction:row} }
-    .bot-item{flex:1;background:transparent;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.02);text-align:center}
-
-    /* Aside trust */
-    .aside .trust{margin-bottom:12px;padding:14px;border-radius:10px;border:1px solid rgba(255,214,107,0.03);background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent)}
-    .trust ul{margin:8px 0 0 18px;color:var(--muted)}
-
-    /* Footer */
-    footer{margin-top:18px;text-align:center;color:var(--muted);font-weight:700;padding-top:12px}
-    .contact{color:var(--gold);font-weight:900;margin-top:6px}
-
-    /* small */
-    @media(max-width:480px){ .big{font-size:20px} .brand h1{font-size:18px} }
-  </style>
+/* WhatsApp Bubble */
+.wh-chat{
+  position:fixed;bottom:18px;right:18px;background:#25D366;
+  width:60px;height:60px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:30px;color:white;cursor:pointer;z-index:999;
+}
+.wh-popup{
+  position:fixed;bottom:90px;right:18px;background:#0f1316;
+  border:1px solid rgba(255,255,255,.1);border-radius:12px;
+  width:240px;padding:14px;color:white;font-size:13px;
+  display:none;z-index:998;
+}
+.wh-btn{
+  background:#25D366;color:black;padding:8px;border-radius:8px;
+  font-weight:700;text-decoration:none;display:block;text-align:center;
+}
+</style>
 </head>
+
 <body>
-  <div class="wrap">
-    <header>
-      <div class="brand">
-        <h1>AKA SHOP — Premium Store</h1>
-        <p>All Premium Services • Kills • Gems • Bank Bot</p>
-      </div>
-      <div style="text-align:right">
-        <div style="font-weight:800;color:var(--gold)">⚡ Instant Delivery • ✅ Trusted</div>
-        <div style="color:var(--muted);font-size:13px;margin-top:6px">💬 24×7 Support</div>
-      </div>
-    </header>
+<div class="wrap">
 
-    <main class="grid">
+<header>
+<h1>AKA SHOP — Premium Store</h1>
+<div class="muted">⚡ Instant Delivery • ✅ Verified • 💬 24×7 Support</div>
+</header>
 
-      <!-- main column -->
-      <div>
-        <!-- Kills card -->
-        <section class="card" id="kills">
-          <h2>🔫 Kills Discount Available</h2>
-          <div class="muted">Buy Kills instantly via Admin. Contact to confirm delivery.</div>
-          <div class="big">1B Kills — ₹900</div>
+<!-- ✅ KILLS -->
+<div class="card">
+<h2>🔫 1B Kills — ₹900</h2>
+<div class="muted">Enter coupon for discount</div>
 
-          <div class="row" aria-label="coupon row">
-            <input id="coupon" class="input" type="text" />
-            <button id="apply" class="btn" type="button">Apply</button>
-            <a id="buyKills" class="btn" href="#" role="button">Buy Now</a>
-          </div>
+<input id="coupon" type="text">
+<a class="btn" id="apply">Apply</a>
+<div id="error" class="error">❌ Invalid code! Contact Admin +91 7980590451</div>
+<div id="final" class="final">Final Price: ₹900</div>
 
-          <div id="error" class="error">❌ Invalid code! Contact ADMIN — +91 7980590451</div>
-          <div id="final" class="final">Final Price: ₹900</div>
-        </section>
+<a href="https://wa.me/917980590451?text=I%20want%201B%20kills" class="btn">Buy Now</a>
+</div>
 
-        <!-- Gems card -->
-        <section class="card" id="gems" style="margin-top:16px">
-          <h2>💎 Gems Monthly Pack</h2>
-          <div class="muted">Instant activation after payment. Send screenshot + account profile picture for delivery (5–10 minutes).</div>
+<!-- ✅ GEMS -->
+<div class="card">
+<h2>💎 Gems Monthly Pack</h2>
+<div class="packs">
+<div class="pack">
+<h3>Gold Pass</h3>
+<div class="muted"><del>₹599</del></div>
+<div class="big">₹270</div>
+<a href="https://wa.me/917980590451?text=Gold%20Pass" class="btn">Buy</a>
+</div>
+<div class="pack">
+<h3>Silver Pass</h3>
+<div class="muted"><del>₹299</del></div>
+<div class="big">₹120</div>
+<a href="https://wa.me/917980590451?text=Silver%20Pass" class="btn">Buy</a>
+</div>
+<div class="pack">
+<h3>Both Pass</h3>
+<div class="muted"><del>₹400</del></div>
+<div class="big">₹380</div>
+<a href="https://wa.me/917980590451?text=Both%20Pass" class="btn">Buy</a>
+</div>
+</div>
+</div>
 
-          <div class="packs" role="list" aria-label="gems packs">
-            <div class="pack" role="listitem">
-              <h3>GOLD PASS</h3>
-              <div class="old">₹599</div>
-              <div class="now">₹270</div>
-              <div style="margin-top:10px"><a class="btn" href="#" role="button">Buy Now</a></div>
-            </div>
+<!-- ✅ BOT -->
+<div class="card">
+<h2>🤖 Lords Mobile Bank Bot</h2>
+<div class="bot">
+<div class="bot-item"><b>Monthly</b><div class="big">₹150</div><a class="btn" href="https://wa.me/917980590451?text=Bot%20Monthly">Buy</a></div>
+<div class="bot-item"><b>3 Months</b><div class="big">₹400</div><a class="btn" href="https://wa.me/917980590451?text=Bot%203%20Months">Buy</a></div>
+<div class="bot-item"><b>6 Months</b><div class="big">₹750</div><a class="btn" href="https://wa.me/917980590451?text=Bot%206%20Months">Buy</a></div>
+<div class="bot-item"><b>1 Year</b><div class="big">₹1450</div><a class="btn" href="https://wa.me/917980590451?text=Bot%201%20Year">Buy</a></div>
+</div>
+</div>
 
-            <div class="pack" role="listitem">
-              <h3>SILVER PASS</h3>
-              <div class="old">₹299</div>
-              <div class="now">₹120</div>
-              <div style="margin-top:10px"><a class="btn" href="#" role="button">Buy Now</a></div>
-            </div>
+<!-- ✅ Trust Badge -->
+<div class="card" style="text-align:center;">
+<div style="font-size:26px;">🛡️</div>
+<div style="color:var(--gold);font-weight:800;font-size:15px;">Trusted by 1,500+ Gamers</div>
+<div style="color:var(--soft);font-size:13px;">Verified Store ✓ | Since 2021</div>
+</div>
 
-            <div class="pack" role="listitem">
-              <h3>BOTH PASS (GOLD + SILVER)</h3>
-              <div class="old">₹400</div>
-              <div class="now">₹380</div>
-              <div style="margin-top:10px"><a class="btn" href="#" role="button">Buy Now</a></div>
-            </div>
-          </div>
-        </section>
+<!-- ✅ Live Order Counter -->
+<div class="card" style="text-align:center;">
+<div style="color:var(--gold);font-weight:800;">✅ Live Orders Today</div>
+<div style="margin-top:6px;color:var(--soft);font-size:18px;" id="orderCount">73</div>
+</div>
 
-        <!-- Bot card -->
-        <section class="card" id="bot" style="margin-top:16px">
-          <h2>🤖 LORDS MOBILE BANK BOT</h2>
-          <div class="muted">Bank bots with commands & panel — fast service. Daily guild stats, daily guild list, Guild Fest PDF downloads from panel.</div>
+<footer>
+📞 Contact Admin: <b>+91 7980590451</b><br>⚡ Instant Delivery | ✅ Trusted | 💬 24×7 Support
+</footer>
 
-          <div class="bot-row" role="list" aria-label="bot plans" style="margin-top:10px">
-            <div class="bot-item" role="listitem">
-              <strong>Monthly</strong><div class="now">₹150</div>
-              <div style="margin-top:10px"><a class="btn" href="#" role="button">Buy</a></div>
-            </div>
-            <div class="bot-item" role="listitem">
-              <strong>3 Months</strong><div class="now">₹400</div>
-              <div style="margin-top:10px"><a class="btn" href="#" role="button">Buy</a></div>
-            </div>
-            <div class="bot-item" role="listitem">
-              <strong>6 Months</strong><div class="now">₹750</div>
-              <div style="margin-top:10px"><a class="btn" href="#" role="button">Buy</a></div>
-            </div>
-            <div class="bot-item" role="listitem">
-              <strong>1 Year</strong><div class="now">₹1450</div>
-              <div style="margin-top:10px"><a class="btn" href="#" role="button">Buy</a></div>
-            </div>
-          </div>
-        </section>
-      </div>
+<!-- ✅ WhatsApp Floating -->
+<div class="wh-popup" id="whPopup">
+<h4 style="margin:0;color:#e6b83a;font-weight:800;">Need Help?</h4>
+<p class="muted">Chat with Admin instantly</p>
+<a href="https://wa.me/917980590451" class="wh-btn">Chat on WhatsApp</a>
+</div>
+<div class="wh-chat" id="whBtn">💬</div>
 
-      <!-- aside column -->
-      <aside class="card aside">
-        <div class="trust">
-          <h2 style="margin-top:0">🔒 Why choose AKA SHOP</h2>
-          <ul>
-            <li style="color:var(--muted)">⚡ Instant Delivery (5–10 min for Gems)</li>
-            <li style="color:var(--muted)">✅ Trusted & Verified</li>
-            <li style="color:var(--muted)">💬 24×7 Support</li>
-            <li style="color:var(--muted)">🔐 Safe Payment Handling</li>
-          </ul>
-          <div style="margin-top:12px;text-align:center">
-            <a class="btn" href="#" role="button">Contact ADMIN</a>
-          </div>
-        </div>
+<!-- ✅ Recent Orders Popup -->
+<div id="orderPopup" style="position:fixed;bottom:25px;left:25px;background:#0f1316;border:1px solid rgba(255,255,255,.08);padding:12px;border-radius:10px;font-size:13px;display:none;z-index:9999;">
+<span id="orderMsg" style="color:#ffd66b;font-weight:600;"></span>
+</div>
 
-        <div class="trust" style="text-align:center">
-          <div style="font-weight:800;color:var(--gold)">Trusted by players</div>
-          <div style="color:var(--muted);margin-top:8px">Fast responses • Manual verification • Low risk</div>
-        </div>
-      </aside>
-    </main>
+<script>
+/* Coupon Logic */
+const code="AKA25VIP", base=900, off=25;
+const c=document.getElementById("coupon"), a=document.getElementById("apply");
+const f=document.getElementById("final"), e=document.getElementById("error");
+a.onclick=()=>{let v=c.value.trim().toUpperCase();
+if(!v){e.style.display="none";f.innerText="Final Price: ₹900";return;}
+if(v===code){e.style.display="none";f.innerText="Final Price: ₹"+(base-off);}
+else{e.style.display="block";f.innerText="Final Price: ₹900";}
+};
 
-    <footer>
-      <div class="contact">Contact ADMIN AKA SHOP — +91 7980590451</div>
-      <div style="color:var(--muted);margin-top:8px">⚡ Instant Delivery | ✅ Trusted Service | 💬 24×7 Support</div>
-    </footer>
-  </div>
+/* WhatsApp popup */
+let btn=document.getElementById("whBtn"), pop=document.getElementById("whPopup"), show=false;
+btn.onclick=()=>{show=!show;pop.style.display=show?"block":"none"};
 
-  <script>
-    // Coupon logic for Kills (static page, no animations)
-    (function(){
-      const input = document.getElementById('coupon');
-      const apply = document.getElementById('apply');
-      const error = document.getElementById('error');
-      const final = document.getElementById('final');
-      const buyKills = document.getElementById('buyKills');
+/* Order counter */
+let count = localStorage.getItem("orders") ? parseInt(localStorage.getItem("orders")) : Math.floor(50+Math.random()*50);
+document.getElementById("orderCount").innerText=count;
+setInterval(()=>{count+=Math.floor(Math.random()*2);localStorage.setItem("orders",count);document.getElementById("orderCount").innerText=count;},120000);
 
-      const BASE = 900;
-      const CODE = 'AKA25VIP';
-      const DISC = 25;
-
-      apply.addEventListener('click', function(){
-        const val = (input.value || '').trim().toUpperCase();
-        if(!val){
-          error.style.display = 'none';
-          final.textContent = 'Final Price: ₹' + BASE;
-          buyKills.href = '#';
-          return;
-        }
-        if(val === CODE){
-          error.style.display = 'none';
-          const f = BASE - DISC;
-          final.textContent = 'Final Price: ₹' + f + ' (₹' + DISC + ' OFF)';
-          buyKills.href = '#';
-        } else {
-          error.style.display = 'block';
-          error.textContent = '❌ Invalid code! Contact ADMIN — +91 7980590451';
-          final.textContent = 'Final Price: ₹' + BASE;
-          buyKills.href = '#';
-        }
-      });
-
-      // allow Enter
-      input.addEventListener('keydown', function(e){
-        if(e.key === 'Enter') apply.click();
-      });
-    })();
-  </script>
+/* Fake recent orders popup */
+const names=["Rohit","Aman","Krish","Aditya","Sahil","Yash","Arjun","Kabir","Ali","Ankit"];
+const cities=["Delhi","Mumbai","Pune","Hyd","Jaipur","Indore","Chennai","Patna","Nagpur","Lucknow"];
+const pro=["1B Kills","Gold Pass","Silver Pass","Both Pass","Bot Monthly","Bot 3M","Bot 1Y"];
+function showOrder(){
+let msg=`✅ ${names[Math.random()*names.length|0]} from ${cities[Math.random()*cities.length|0]} bought ${pro[Math.random()*pro.length|0]}`;
+document.getElementById("orderMsg").innerText=msg;
+let box=document.getElementById("orderPopup");box.style.display="block";
+setTimeout(()=>box.style.display="none",4000);}
+setTimeout(showOrder,8000);
+setInterval(showOrder,40000+Math.random()*50000);
+</script>
 </body>
 </html>
