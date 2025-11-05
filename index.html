@@ -1,392 +1,424 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>AKA SHOP — Premium Store</title>
 
-<!-- ====== THEME & LAYOUT ====== -->
+<!-- ===== STYLES ===== -->
 <style>
 :root{
-  --bg:#050608;--card:#0f1316;--gold:#e6b83a;--soft:#ffd66b;--muted:#a3a9b2;
-  --radius:12px;
+  --bg:#050608;
+  --card:#0c0f13;
+  --gold1:#f7d66d;
+  --gold2:#c89d2e;
+  --muted:#b2b8c2;
+  --accent:#25d366;
+  --radius:14px;
+  --maxw:1100px;
 }
-*{box-sizing:border-box}
-body{
-  margin:0;background:var(--bg);color:#fff;font-family:Poppins,Arial,sans-serif;
-  padding:18px;display:flex;justify-content:center;
-}
-.wrap{width:100%;max-width:1100px}
+*{box-sizing:border-box;font-family:Poppins,Arial,Helvetica,sans-serif}
+body{margin:0;background:var(--bg);color:#fff;padding:16px;display:flex;justify-content:center}
+.wrap{width:100%;max-width:var(--maxw)}
 
 /* Header */
-header{
-  background:var(--card);border:1px solid rgba(255,255,255,.07);
-  border-radius:16px;padding:18px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap
-}
-h1{margin:0;color:var(--gold);font-size:22px;font-weight:800}
-.header-sub{color:var(--muted);font-size:14px}
+header{background:var(--card);padding:18px;border-radius:16px;border:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;align-items:center}
+.brand h1{margin:0;color:var(--gold1);font-size:22px;font-weight:900}
+.brand p{margin:0;color:var(--muted);font-size:13px}
 
-/* Card */
-.card{
-  background:var(--card);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);
-  padding:18px;margin-top:16px
-}
-h2{margin:0 0 8px;color:var(--gold);font-size:18px;font-weight:800}
+/* currency toggle */
+.currency-wrap{display:flex;gap:10px;align-items:center}
+
+/* Cards */
+.card{background:var(--card);border-radius:12px;padding:16px;border:1px solid rgba(255,255,255,.05);margin-top:14px}
+.card h2{margin:0;color:var(--gold1);font-weight:800}
 .muted{color:var(--muted);font-size:14px}
-.big{font-size:26px;font-weight:800;color:var(--soft);margin:10px 0}
+.big{font-weight:800;font-size:22px;color:var(--gold1);margin:8px 0}
 
-/* Inputs & Buttons */
-input{
-  width:66%;padding:10px;border-radius:10px;border:1px solid #333;background:#000;color:#fff;outline:none
-}
+/* grid */
+.grid{display:flex;gap:12px;flex-wrap:wrap}
+.box{flex:1;min-width:160px;background:#0b0e10;border-radius:10px;padding:12px;text-align:center;border:1px solid rgba(255,255,255,.04)}
+.old{color:var(--muted);text-decoration:line-through}
+.now{font-weight:900;color:var(--gold1);font-size:18px;margin-top:6px}
+
+/* Buttons */
 .btn{
-  background:var(--gold);color:#000;text-decoration:none;font-weight:800;
-  padding:9px 14px;border-radius:10px;display:inline-block;border:none;cursor:pointer
+  display:inline-flex;align-items:center;gap:8px;justify-content:center;
+  padding:10px 16px;border-radius:12px;border:none;cursor:pointer;font-weight:900;
+  background:linear-gradient(45deg,var(--gold1),var(--gold2));color:#000;transition:.18s;
 }
-.btn:active{transform:scale(.98)}
+.btn:hover{transform:translateY(-3px);box-shadow:0 0 12px rgba(255,215,85,.25)}
+.btn-ghost{background:transparent;border:1px solid rgba(255,255,255,.06);color:var(--muted)}
+
+/* pulse */
 .btn-pulse{animation:pulse 2s infinite}
-@keyframes pulse{
-  0%{transform:scale(1);box-shadow:0 0 0 0 rgba(230,184,58,.45)}
-  70%{transform:scale(1.04);box-shadow:0 0 10px 10px rgba(230,184,58,0)}
-  100%{transform:scale(1);box-shadow:0 0 0 0 rgba(230,184,58,0)}
+@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.05)}100%{transform:scale(1)}}
+
+/* input */
+input[type="text"], input[type="number"]{
+  padding:10px;border-radius:10px;background:#000;border:1px solid #222;color:#fff;outline:none
 }
 
-/* Price glow */
-.price-glow{animation:flash 2.2s infinite}
-@keyframes flash{
-  0%,100%{color:#ffd66b;text-shadow:0 0 5px #ffd66b}
-  50%{color:#fff6d6;text-shadow:0 0 10px #e6b83a}
-}
+/* cart button */
+#openCart{position:fixed;top:16px;right:16px;z-index:9000;background:linear-gradient(45deg,var(--gold1),var(--gold2));padding:10px 18px;border-radius:40px;border:none;font-weight:900;color:#000;cursor:pointer}
 
-/* Low stock blink */
-@keyframes blink{50%{opacity:.45}}
-.badge-blink{color:#ff4747;font-size:13px;font-weight:800;animation:blink 1s infinite}
+/* cart modal */
+#cartBox{display:none;position:fixed;left:0;bottom:0;width:100%;height:64%;background:#0f1316;border-top:3px solid var(--gold1);z-index:9001;padding:18px;overflow:auto}
+#cartItems li{margin:8px 0;display:flex;align-items:center;gap:10px;justify-content:space-between}
+.smallmuted{color:var(--muted);font-size:13px}
 
-/* Packs grid */
-.packs,.bot,.rss-grid{display:flex;gap:12px;flex-wrap:wrap}
-.pack,.bot-item,.rss-item{
-  flex:1;background:#0b0e10;border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:14px;text-align:center
-}
-.old{color:var(--muted);text-decoration:line-through;margin-top:4px}
-.now{color:var(--soft);font-weight:900;font-size:20px;margin-top:6px}
+/* whatsapp bubble */
+.wh{position:fixed;bottom:20px;right:20px;background:var(--accent);width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;color:#000;z-index:9002;box-shadow:0 6px 18px rgba(0,0,0,.4);cursor:pointer}
 
-/* Footer */
-footer{text-align:center;margin-top:20px;color:var(--muted);font-size:14px}
+/* review */
+.reviews{display:flex;flex-direction:column;gap:10px}
+.review{background:#0b0e10;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,.04)}
+.stars{color:#ffd66b;font-weight:900}
 
-/* Errors & Final price */
-.error{color:#ff6060;font-size:13px;margin-top:6px;display:none}
-.final{margin-top:8px;font-weight:900}
-
-/* Cart badge button (fixed) */
-.cart-btn{
-  position:fixed;top:15px;right:18px;z-index:900;background:var(--gold);color:#000;
-  padding:8px 12px;border-radius:30px;font-weight:900;border:none;cursor:pointer
-}
-
-/* Cart popup */
-#cartBox{
-  display:none;position:fixed;left:0;bottom:0;width:100%;height:62%;
-  background:#0f1316;border-top:2px solid var(--gold);z-index:1000;color:#fff;overflow:auto;padding:16px
-}
-#cartItems li{margin:6px 0}
-
-/* WhatsApp Floating */
-.wh-chat{
-  position:fixed;bottom:18px;right:18px;background:#25D366;width:60px;height:60px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;color:#fff;font-size:30px;cursor:pointer;z-index:999;box-shadow:0 0 12px rgba(0,0,0,.4)
-}
-.wh-popup{
-  position:fixed;bottom:90px;right:18px;background:#0f1316;border:1px solid rgba(255,255,255,.1);border-radius:12px;width:260px;padding:14px;color:#fff;display:none;z-index:998
-}
-.wh-btn{background:#25D366;color:#000;padding:8px;border-radius:8px;font-weight:800;text-decoration:none;display:block;text-align:center}
-
-/* Recent order toast */
-#orderPopup{
-  position:fixed;bottom:25px;left:25px;background:#0f1316;border:1px solid rgba(255,255,255,.08);
-  padding:12px 14px;border-radius:10px;font-size:13px;display:none;z-index:9999
-}
-#orderMsg{color:#ffd66b;font-weight:700}
+/* responsive */
+@media(max-width:760px){ .grid{flex-direction:column} .box{min-width:unset} }
 </style>
-</head>
 
+<!-- jsPDF library for invoice (CDN) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+</head>
 <body>
 <div class="wrap">
 
-  <!-- Header -->
+  <!-- HEADER -->
   <header>
-    <div>
+    <div class="brand">
       <h1>AKA SHOP — Premium Store</h1>
-      <div class="header-sub">⚡ Instant Delivery • ✅ Verified • 💬 24×7 Support</div>
+      <p>⚡ Instant Delivery • ✅ Trusted • 💬 24×7 Support</p>
+    </div>
+
+    <div class="currency-wrap">
+      <button id="currencyBtn" class="btn" style="padding:8px 12px;font-size:13px">💱 Currency: INR (₹)</button>
     </div>
   </header>
 
-  <!-- Fixed Cart Button -->
-  <button id="openCart" class="cart-btn">🛒 Cart (<span id="cartCount">0</span>)</button>
+  <!-- CART BUTTON -->
+  <button id="openCart">🛒 Cart (<span id="cartCount">0</span>)</button>
 
   <!-- KILLS -->
   <section class="card" id="kills">
-    <h2>🔫 Kills Discount Available</h2>
-    <div class="muted">Buy Kills instantly via Admin. (Coupon supported)</div>
-    <div class="big price-glow">1B Kills — ₹900</div>
+    <h2>🔫 Kills Discount</h2>
+    <div class="muted">Buy Kills instantly via Admin</div>
+    <div class="big"><span class="price" data-inr="1050">₹1050</span></div>
 
-    <input id="coupon" type="text" placeholder="">
-    <button class="btn" id="apply">Apply</button>
-    <div id="error" class="error">❌ Invalid code! Contact ADMIN — +91 7980590451</div>
-    <div id="final" class="final">Final Price: ₹900</div>
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:8px">
+      <input id="killCoupon" type="text" placeholder="Coupon code">
+      <button id="applyKill" class="btn">🏷 Apply</button>
+      <div id="killError" class="smallmuted" style="color:#ff6b6b;display:none">Invalid code — Contact ADMIN +91 7980590451</div>
+    </div>
 
-    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px">
-      <a href="https://wa.me/917980590451?text=I%20want%201B%20Kills" class="btn">Buy Now (WA)</a>
-      <a href="javascript:addToCart('1B Kills',900)" class="btn btn-pulse">Add to Cart</a>
+    <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap">
+      <a class="btn" id="buyKillsWA" href="https://wa.me/917980590451?text=I%20want%201B%20Kills">🛒 Buy</a>
+      <button class="btn btn-pulse" onclick="addToCart('1B Kills',1050)">➕ Add</button>
     </div>
   </section>
 
   <!-- GEMS -->
-  <section class="card" id="gems">
+  <section class="card">
     <h2>💎 Gems Monthly Pack</h2>
-    <div class="packs">
-      <div class="pack">
-        <h3>Gold Pass</h3>
+    <div class="grid" style="margin-top:10px">
+      <div class="box">
+        <div class="smallmuted">Gold Pass</div>
         <div class="old">₹599</div>
-        <div class="now price-glow">₹270</div>
-        <div style="margin-top:8px">
-          <a class="btn" href="https://wa.me/917980590451?text=Gold%20Pass">Buy</a>
-          <a class="btn btn-pulse" href="javascript:addToCart('Gold Pass',270)">Add</a>
-        </div>
+        <div class="now"><span class="price" data-inr="270">₹270</span></div>
+        <div style="margin-top:8px"><a class="btn" href="https://wa.me/917980590451?text=Gold%20Pass">🛒 Buy</a> <button class="btn btn-pulse" onclick="addToCart('Gold Pass',270)">➕ Add</button></div>
       </div>
-      <div class="pack">
-        <h3>Silver Pass</h3>
+
+      <div class="box">
+        <div class="smallmuted">Silver Pass</div>
         <div class="old">₹299</div>
-        <div class="now price-glow">₹120</div>
-        <div style="margin-top:8px">
-          <a class="btn" href="https://wa.me/917980590451?text=Silver%20Pass">Buy</a>
-          <a class="btn btn-pulse" href="javascript:addToCart('Silver Pass',120)">Add</a>
-        </div>
+        <div class="now"><span class="price" data-inr="120">₹120</span></div>
+        <div style="margin-top:8px"><a class="btn" href="https://wa.me/917980590451?text=Silver%20Pass">🛒 Buy</a> <button class="btn btn-pulse" onclick="addToCart('Silver Pass',120)">➕ Add</button></div>
       </div>
-      <div class="pack">
-        <h3>Both Pass (Gold+Silver)</h3>
+
+      <div class="box">
+        <div class="smallmuted">Both Pass</div>
         <div class="old">₹400</div>
-        <div class="now price-glow">₹380</div>
-        <div style="margin-top:8px">
-          <a class="btn" href="https://wa.me/917980590451?text=Both%20Pass">Buy</a>
-          <a class="btn btn-pulse" href="javascript:addToCart('Both Pass',380)">Add</a>
-        </div>
+        <div class="now"><span class="price" data-inr="380">₹380</span></div>
+        <div style="margin-top:8px"><a class="btn" href="https://wa.me/917980590451?text=Both%20Pass">🛒 Buy</a> <button class="btn btn-pulse" onclick="addToCart('Both Pass',380)">➕ Add</button></div>
       </div>
     </div>
   </section>
 
-  <!-- Monthly Diamond Pass -->
-  <section class="card" id="diamond">
-    <h2>💎 Monthly Diamond Pass</h2>
-    <div class="packs">
-      <div class="pack">
-        <h3>1 Month Diamond Pass</h3>
+  <!-- DIAMOND -->
+  <section class="card">
+    <h2>💎 Diamond Pass</h2>
+    <div class="grid" style="margin-top:10px">
+      <div class="box">
+        <div class="smallmuted">1 Month Diamond</div>
         <div class="old">₹1880</div>
-        <div class="now price-glow">₹1820</div>
-        <div style="margin-top:8px">
-          <a class="btn" href="https://wa.me/917980590451?text=1%20Month%20Diamond%20Pass">Buy</a>
-          <a class="btn btn-pulse" href="javascript:addToCart('1 Month Diamond Pass',1820)">Add</a>
-        </div>
+        <div class="now"><span class="price" data-inr="1820">₹1820</span></div>
+        <div style="margin-top:8px"><a class="btn" href="#">🛒 Buy</a> <button class="btn btn-pulse" onclick="addToCart('1M Diamond',1820)">➕ Add</button></div>
       </div>
-      <div class="pack">
-        <h3>7-Day Diamond Pass</h3>
+      <div class="box">
+        <div class="smallmuted">7 Day Diamond</div>
         <div class="old">₹190</div>
-        <div class="now price-glow">₹190</div>
-        <div style="margin-top:8px">
-          <a class="btn" href="https://wa.me/917980590451?text=7%20Day%20Diamond%20Pass">Buy</a>
-          <a class="btn btn-pulse" href="javascript:addToCart('7-Day Diamond Pass',190)">Add</a>
-        </div>
+        <div class="now"><span class="price" data-inr="190">₹190</span></div>
+        <div style="margin-top:8px"><a class="btn" href="#">🛒 Buy</a> <button class="btn btn-pulse" onclick="addToCart('7D Diamond',190)">➕ Add</button></div>
       </div>
     </div>
   </section>
 
-  <!-- Recourse (RSS) -->
-  <section class="card" id="rss">
+  <!-- RSS -->
+  <section class="card">
     <h2>📦 Recourse (RSS)</h2>
-    <div class="badge-blink">⚠️ Limited Stock — Selling Fast!</div>
-    <div class="muted" style="margin-top:6px">Kingdom Till 1700 — Last Available</div>
-
-    <div class="rss-grid" style="margin-top:10px">
-      <div class="rss-item"><b>44444B</b><div class="now">₹130</div><div style="margin-top:8px"><a class="btn btn-pulse" href="javascript:addToCart('44444B RSS',130)">Add</a></div></div>
-      <div class="rss-item"><b>44442B</b><div class="now">₹120</div><div style="margin-top:8px"><a class="btn btn-pulse" href="javascript:addToCart('44442B RSS',120)">Add</a></div></div>
-      <div class="rss-item"><b>44440B</b><div class="now">₹110</div><div style="margin-top:8px"><a class="btn btn-pulse" href="javascript:addToCart('44440B RSS',110)">Add</a></div></div>
-      <div class="rss-item"><b>22222B</b><div class="now">₹110</div><div style="margin-top:8px"><a class="btn btn-pulse" href="javascript:addToCart('22222B RSS',110)">Add</a></div></div>
-      <div class="rss-item"><b>22220B</b><div class="now">₹90</div><div style="margin-top:8px"><a class="btn btn-pulse" href="javascript:addToCart('22220B RSS',90)">Add</a></div></div>
-      <div class="rss-item"><b>33333B</b><div class="now">₹120</div><div style="margin-top:8px"><a class="btn btn-pulse" href="javascript:addToCart('33333B RSS',120)">Add</a></div></div>
-      <div class="rss-item"><b>22221B</b><div class="now">₹100</div><div style="margin-top:8px"><a class="btn btn-pulse" href="javascript:addToCart('22221B RSS',100)">Add</a></div></div>
-      <div class="rss-item"><b>11111B</b><div class="now">₹80</div><div style="margin-top:8px"><a class="btn btn-pulse" href="javascript:addToCart('11111B RSS',80)">Add</a></div></div>
-      <div class="rss-item"><b>11110B</b><div class="now">₹80</div><div style="margin-top:8px"><a class="btn btn-pulse" href="javascript:addToCart('11110B RSS',80)">Add</a></div></div>
-      <div class="rss-item"><b>4B Food Only</b><div class="now">₹80</div><div style="margin-top:8px"><a class="btn btn-pulse" href="javascript:addToCart('4B Food Only',80)">Add</a></div></div>
+    <div class="smallmuted">Kingdom Till 1700 — Last Available</div>
+    <div class="grid" style="margin-top:10px">
+      <div class="box"><b>44444B</b><div class="now"><span class="price" data-inr="130">₹130</span></div><button class="btn btn-pulse" onclick="addToCart('44444B RSS',130)">➕ Add</button></div>
+      <div class="box"><b>44442B</b><div class="now"><span class="price" data-inr="120">₹120</span></div><button class="btn btn-pulse" onclick="addToCart('44442B RSS',120)">➕ Add</button></div>
+      <div class="box"><b>44440B</b><div class="now"><span class="price" data-inr="110">₹110</span></div><button class="btn btn-pulse" onclick="addToCart('44440B RSS',110)">➕ Add</button></div>
+      <div class="box"><b>22222B</b><div class="now"><span class="price" data-inr="110">₹110</span></div><button class="btn btn-pulse" onclick="addToCart('22222B RSS',110)">➕ Add</button></div>
+      <div class="box"><b>22220B</b><div class="now"><span class="price" data-inr="90">₹90</span></div><button class="btn btn-pulse" onclick="addToCart('22220B RSS',90)">➕ Add</button></div>
+      <div class="box"><b>33333B</b><div class="now"><span class="price" data-inr="120">₹120</span></div><button class="btn btn-pulse" onclick="addToCart('33333B RSS',120)">➕ Add</button></div>
+      <div class="box"><b>22221B</b><div class="now"><span class="price" data-inr="100">₹100</span></div><button class="btn btn-pulse" onclick="addToCart('22221B RSS',100)">➕ Add</button></div>
+      <div class="box"><b>11111B</b><div class="now"><span class="price" data-inr="80">₹80</span></div><button class="btn btn-pulse" onclick="addToCart('11111B RSS',80)">➕ Add</button></div>
+      <div class="box"><b>11110B</b><div class="now"><span class="price" data-inr="80">₹80</span></div><button class="btn btn-pulse" onclick="addToCart('11110B RSS',80)">➕ Add</button></div>
+      <div class="box"><b>4B Food Only</b><div class="now"><span class="price" data-inr="80">₹80</span></div><button class="btn btn-pulse" onclick="addToCart('4B Food',80)">➕ Add</button></div>
     </div>
 
-    <!-- Stock meter -->
+    <!-- stock bar -->
     <div style="margin-top:12px">
-      <div style="color:#ffd66b;font-size:13px;font-weight:800;margin-bottom:4px">Stock Status</div>
-      <div style="width:100%;background:#1a1f22;height:10px;border-radius:6px">
-        <div id="rssStock" style="height:100%;width:75%;background:#e6b83a;border-radius:6px"></div>
+      <div class="smallmuted">Stock Status</div>
+      <div style="width:100%;background:#111;height:10px;border-radius:6px;margin-top:6px">
+        <div id="rssStock" style="height:100%;width:76%;background:linear-gradient(90deg,var(--gold1),var(--gold2));border-radius:6px"></div>
       </div>
     </div>
   </section>
 
-  <!-- Bank Bot -->
-  <section class="card" id="bot">
+  <!-- BOT -->
+  <section class="card">
     <h2>🤖 Lords Mobile Bank Bot</h2>
-    <div class="muted">Panel + Commands + Daily Stats + Guild Fest PDF</div>
-    <div class="bot" style="margin-top:10px">
-      <div class="bot-item"><b>Monthly</b><div class="now">₹150</div><div style="margin-top:8px"><a class="btn" href="https://wa.me/917980590451?text=Bank%20Bot%20Monthly">Buy</a> <a class="btn btn-pulse" href="javascript:addToCart('Bank Bot Monthly',150)">Add</a></div></div>
-      <div class="bot-item"><b>3 Months</b><div class="now">₹400</div><div style="margin-top:8px"><a class="btn" href="https://wa.me/917980590451?text=Bank%20Bot%203%20Months">Buy</a> <a class="btn btn-pulse" href="javascript:addToCart('Bank Bot 3 Months',400)">Add</a></div></div>
-      <div class="bot-item"><b>6 Months</b><div class="now">₹750</div><div style="margin-top:8px"><a class="btn" href="https://wa.me/917980590451?text=Bank%20Bot%206%20Months">Buy</a> <a class="btn btn-pulse" href="javascript:addToCart('Bank Bot 6 Months',750)">Add</a></div></div>
-      <div class="bot-item"><b>1 Year</b><div class="now">₹1450</div><div style="margin-top:8px"><a class="btn" href="https://wa.me/917980590451?text=Bank%20Bot%201%20Year">Buy</a> <a class="btn btn-pulse" href="javascript:addToCart('Bank Bot 1 Year',1450)">Add</a></div></div>
+    <div class="grid" style="margin-top:10px">
+      <div class="box">Monthly<div class="now"><span class="price" data-inr="150">₹150</span></div><button class="btn btn-pulse" onclick="addToCart('Bot Monthly',150)">➕ Add</button></div>
+      <div class="box">3 Months<div class="now"><span class="price" data-inr="400">₹400</span></div><button class="btn btn-pulse" onclick="addToCart('Bot 3M',400)">➕ Add</button></div>
+      <div class="box">6 Months<div class="now"><span class="price" data-inr="750">₹750</span></div><button class="btn btn-pulse" onclick="addToCart('Bot 6M',750)">➕ Add</button></div>
+      <div class="box">1 Year<div class="now"><span class="price" data-inr="1450">₹1450</span></div><button class="btn btn-pulse" onclick="addToCart('Bot 1Y',1450)">➕ Add</button></div>
     </div>
   </section>
 
-  <!-- Trust Badge -->
-  <section class="card" style="text-align:center">
-    <div style="font-size:26px">🛡️</div>
-    <div style="color:var(--gold);font-weight:900">Trusted by 1,500+ Gamers</div>
-    <div style="color:var(--soft);font-size:13px">Verified Store ✓ | Since 2021</div>
-  </section>
+  <!-- Trust + Reviews -->
+  <section class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div>
+        <div style="font-size:20px;font-weight:900;color:var(--gold1)">🛡 Trusted by 1,500+ Gamers</div>
+        <div class="smallmuted" style="margin-top:6px">Verified Gaming Store • Since 2021</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-weight:900;color:var(--gold1);font-size:18px">★★★★★</div>
+        <div class="smallmuted">7K+ Reviews</div>
+      </div>
+    </div>
 
-  <!-- Live Order Counter -->
-  <section class="card" style="text-align:center">
-    <div style="color:var(--gold);font-weight:900">✅ Live Orders Today</div>
-    <div id="orderCount" style="margin-top:6px;color:var(--soft);font-size:18px">73</div>
+    <!-- Fake Reviews -->
+    <div style="margin-top:12px" class="reviews">
+      <div class="review">
+        <div class="stars">★★★★★</div>
+        <div style="font-weight:800;margin-top:6px">"Fast delivery — gems activated in 5 minutes. Trusted seller!"</div>
+        <div class="smallmuted">— Rohan (Delhi)</div>
+      </div>
+
+      <div class="review">
+        <div class="stars">★★★★★</div>
+        <div style="font-weight:800;margin-top:6px">"Perfect service, bank bot panel is very useful. Highly recommended."</div>
+        <div class="smallmuted">— Vikas (Mumbai)</div>
+      </div>
+
+      <div class="review">
+        <div class="stars">★★★★★</div>
+        <div style="font-weight:800;margin-top:6px">"Killed many enemies, instant delivery, legit — thanks!"</div>
+        <div class="smallmuted">— Akash (Pune)</div>
+      </div>
+    </div>
   </section>
 
   <!-- Footer -->
-  <footer>
-    📞 Contact Admin: <b>+91 7980590451</b><br/>
-    ⚡ Instant Delivery | ✅ Trusted | 💬 24×7 Support
+  <footer style="margin-top:14px;text-align:center" class="smallmuted">
+    Contact Admin: <b>+91 7980590451</b> • Instant Delivery • 24×7 Support
   </footer>
+
 </div>
 
 <!-- WhatsApp floating -->
-<div class="wh-popup" id="whPopup">
-  <h4 style="margin:0;color:#e6b83a;font-weight:900">Need Help?</h4>
-  <p class="muted" style="margin:4px 0 10px">Chat with Admin instantly</p>
-  <a href="https://wa.me/917980590451?text=Hi%20Admin%2C%20need%20help" class="wh-btn">Chat on WhatsApp</a>
+<a class="wh" href="https://wa.me/917980590451" title="Chat Admin">💬</a>
+
+<!-- CART BOX (hidden) -->
+<div id="cartBox">
+  <h3 style="margin:0 0 8px;color:var(--gold1)">🛒 Your Cart</h3>
+  <ul id="cartItems" style="list-style:none;padding:0;margin:0 0 10px"></ul>
+
+  <div style="display:flex;gap:8px;align-items:center">
+    <div style="flex:1">Total: <b><span id="cartTotal">0</span></b></div>
+    <div style="flex-basis:240px;display:flex;gap:8px">
+      <button id="applyCartCoupon" class="btn">🏷 Apply Coupon</button>
+      <button id="clearCart" class="btn btn-ghost">🧹 Clear</button>
+    </div>
+  </div>
+
+  <div style="margin-top:12px;display:flex;gap:10px">
+    <button id="downloadInvoice" class="btn" style="background:linear-gradient(45deg,#9ee7b1,#3bc06d)">📥 Download Invoice</button>
+    <button id="checkoutBtn" class="btn" style="flex:1;background:#25d366;color:#000">✅ Checkout on WhatsApp</button>
+  </div>
+
+  <div style="margin-top:10px"><button id="closeCart" class="btn btn-ghost" style="width:100%">Close</button></div>
 </div>
-<div class="wh-chat" id="whBtn">💬</div>
 
-<!-- Recent order popup -->
-<div id="orderPopup"><span id="orderMsg"></span></div>
-
-<!-- Success & Click sounds -->
-<audio id="orderSound" src="https://cdn.jsdelivr.net/gh/zenxadius/sfx/coin.mp3"></audio>
+<!-- audio & libs -->
 <audio id="clickSfx" src="https://cdn.jsdelivr.net/gh/zenxadius/sfx/menu-click.mp3"></audio>
+<audio id="orderSfx" src="https://cdn.jsdelivr.net/gh/zenxadius/sfx/coin.mp3"></audio>
 
-<!-- ====== LOGIC SCRIPTS ====== -->
+<!-- ====== SCRIPTS ====== -->
 <script>
-/* ---------- Kills coupon (AKA25VIP) ---------- */
-const K_BASE=900, K_OFF=25, K_CODE="AKA25VIP";
-const c=document.getElementById('coupon'), ap=document.getElementById('apply'),
-      er=document.getElementById('error'), fp=document.getElementById('final');
-ap.onclick=()=>{
-  const v=(c.value||'').trim().toUpperCase();
-  if(!v){er.style.display='none';fp.textContent='Final Price: ₹900';return;}
-  if(v===K_CODE){er.style.display='none';fp.textContent='Final Price: ₹'+(K_BASE-K_OFF);}
-  else {er.style.display='block';fp.textContent='Final Price: ₹900';}
+/* ----------------- GLOBAL ----------------- */
+// currency
+let currency = 'INR';
+const RATE = 0.012; // 1 INR = 0.012 USD (change if needed)
+
+function formatPriceINR(n){ return '₹'+n; }
+function formatPriceUSD(n){ return '$'+(n*RATE).toFixed(2); }
+
+// update all visible prices
+function updateCurrencyUI(){
+  document.querySelectorAll('.price').forEach(el=>{
+    const inr = Number(el.getAttribute('data-inr'));
+    el.textContent = (currency==='INR') ? formatPriceINR(inr) : formatPriceUSD(inr);
+  });
+  document.getElementById('currencyBtn').textContent = (currency==='INR') ? '💱 Currency: INR (₹)' : '💱 Currency: USD ($)';
+}
+document.getElementById('currencyBtn').onclick = ()=>{
+  currency = (currency==='INR') ? 'USD' : 'INR';
+  updateCurrencyUI();
 };
+updateCurrencyUI();
 
-/* ---------- WhatsApp helper & click sound ---------- */
-document.querySelectorAll('.btn,.wh-btn').forEach(b=>b.addEventListener('click',()=>document.getElementById('clickSfx').play()));
+/* click sound */
+document.addEventListener('click', e=>{
+  if(e.target.matches('.btn')||e.target.closest('.btn')){
+    document.getElementById('clickSfx').play().catch(()=>{});
+  }
+});
 
-/* ---------- WhatsApp bubble ---------- */
-let show=false;document.getElementById('whBtn').onclick=()=>{show=!show;document.getElementById('whPopup').style.display=show?'block':'none'};
+/* ----------------- CART ----------------- */
+let CART = JSON.parse(localStorage.getItem('AKA_CART')) || [];
+let cartCoupon = false;
 
-/* ---------- Live order counter ---------- */
-let cnt = localStorage.getItem('orders') ? parseInt(localStorage.getItem('orders')) : Math.floor(50+Math.random()*50);
-const oc = document.getElementById('orderCount'); oc.textContent=cnt;
-setInterval(()=>{cnt += Math.floor(Math.random()*2); localStorage.setItem('orders',cnt); oc.textContent=cnt;}, 120000);
-
-/* ---------- Recent orders popup ---------- */
-const names=["Rohit","Aman","Krish","Aditya","Sahil","Yash","Arjun","Kabir","Ali","Ankit"];
-const cities=["Delhi","Mumbai","Pune","Hyd","Jaipur","Indore","Chennai","Patna","Nagpur","Lucknow"];
-const pro=["1B Kills","Gold Pass","Silver Pass","Both Pass","1M Diamond","7D Diamond","Bot Monthly"];
-function showOrder(){const msg=`✅ ${names[Math.random()*names.length|0]} from ${cities[Math.random()*cities.length|0]} bought ${pro[Math.random()*pro.length|0]}`;
-  document.getElementById('orderMsg').textContent=msg; const box=document.getElementById('orderPopup'); box.style.display='block'; setTimeout(()=>box.style.display='none',4200);}
-setTimeout(showOrder,8000); setInterval(showOrder,40000+Math.random()*50000);
-
-/* ---------- RSS stock bar animate ---------- */
-let s=75; setInterval(()=>{ if(s>30){s-=Math.random()*1;} document.getElementById('rssStock').style.width=s+'%'; },20000);
-
-/* ================== CART SYSTEM ================== */
-let cart = JSON.parse(localStorage.getItem("cartStore")) || [];
-let couponUsed = false;
-
-function saveCart(){ localStorage.setItem("cartStore", JSON.stringify(cart)); }
-function updateCartCount(){ document.getElementById("cartCount").innerText = cart.length; }
+function saveCart(){ localStorage.setItem('AKA_CART', JSON.stringify(CART)); }
+function updateCartCount(){ document.getElementById('cartCount').innerText = CART.reduce((s,i)=>s+i.qty,0); }
 updateCartCount();
 
-function addToCart(item, price){
-  const ex = cart.find(p=>p.item===item);
-  if(ex){ ex.qty = Math.min(10, (ex.qty||1)+1); }
-  else { cart.push({item, price, qty:1}); }
-  saveCart(); updateCartCount(); alert(item+" added to cart ✅");
+function addToCart(name, price){
+  const found = CART.find(p=>p.name===name);
+  if(found){ found.qty = Math.min(10, found.qty+1); }
+  else { CART.push({name, price: Number(price), qty:1}); }
+  saveCart(); updateCartCount(); renderCart();
+  alert(name + ' added to cart ✅');
 }
-
-function removeItem(i){ cart.splice(i,1); saveCart(); updateCartCount(); renderCart(); }
-
-function updateQty(i,val){ cart[i].qty = Math.max(1, Math.min(10, parseInt(val)||1)); saveCart(); renderCart(); }
 
 function renderCart(){
-  let html='', total=0;
-  cart.forEach((p,i)=>{ const line = p.price * p.qty; total+=line;
-    html += `<li>${p.item} — ₹${p.price} × 
-      <input type="number" min="1" max="10" value="${p.qty}" style="width:48px" onchange="updateQty(${i},this.value)">
-      = ₹${line}
-      <button onclick="removeItem(${i})" style="margin-left:6px;color:#ff4f4f;background:none;border:none;font-weight:900">✖</button>
+  const ul = document.getElementById('cartItems');
+  if(!CART.length){ ul.innerHTML = '<div class="smallmuted">Your cart is empty</div>'; document.getElementById('cartTotal').innerText = (currency==='INR')? '₹0' : '$0.00'; return;}
+  let html = '';
+  let totalINR = 0;
+  CART.forEach((p, idx)=>{
+    const line = p.price * p.qty;
+    totalINR += line;
+    html += `<li>
+      <div style="flex:1">
+        <div style="font-weight:800">${p.name}</div>
+        <div class="smallmuted">₹${p.price} × </div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <input type="number" min="1" max="10" value="${p.qty}" style="width:60px;padding:6px;border-radius:8px;background:#030405;color:#fff;border:1px solid #222" onchange="changeQty(${idx},this.value)">
+        <div style="font-weight:900">${(currency==='INR')? '₹'+(p.price*p.qty) : '$'+((p.price*p.qty)*RATE).toFixed(2)}</div>
+        <button onclick="removeItem(${idx})" style="background:none;border:none;color:#ff6b6b;font-weight:900;font-size:18px">✖</button>
+      </div>
     </li>`;
   });
-  const discount = couponUsed ? 25 : 0;
-  document.getElementById('cartItems').innerHTML = html || '<div class="muted">Your cart is empty</div>';
-  document.getElementById('cartTotal').innerText = Math.max(0, total - discount);
+  ul.innerHTML = html;
+  const discount = cartCoupon ? 25 : 0;
+  const finalINR = Math.max(0, totalINR - discount);
+  document.getElementById('cartTotal').innerText = (currency==='INR') ? '₹'+finalINR : '$'+(finalINR*RATE).toFixed(2);
 }
 
-document.getElementById('openCart').onclick=()=>{ document.getElementById('cartBox').style.display='block'; renderCart(); };
-document.getElementById('closeCart').onclick=()=>{ document.getElementById('cartBox').style.display='none'; };
-
-function applyCartCoupon(){
-  const code = prompt("Enter coupon code:");
-  if(code && code.toUpperCase()==='AKA25VIP' && !couponUsed){ couponUsed=true; alert('✅ Coupon Applied: ₹25 OFF'); renderCart(); }
-  else { alert('❌ Invalid or already used'); }
+function changeQty(i,val){
+  CART[i].qty = Math.max(1, Math.min(10, Number(val)||1));
+  saveCart(); updateCartCount(); renderCart();
 }
+function removeItem(i){ CART.splice(i,1); saveCart(); updateCartCount(); renderCart(); }
 
-document.getElementById('checkoutBtn').onclick=()=>{
-  let msg="I want to buy:\n"; let total=0;
-  cart.forEach(p=>{ const line=p.price*p.qty; total+=line; msg+=`• ${p.item} × ${p.qty} — ₹${line}\n`; });
-  if(couponUsed) total-=25; msg+=`\nTotal: ₹${total}`;
-  // confetti + sound
-  startConfetti(); document.getElementById('orderSound').play();
-  setTimeout(()=>{ window.open("https://wa.me/917980590451?text="+encodeURIComponent(msg)); },800);
+document.getElementById('openCart').onclick = ()=>{
+  document.getElementById('cartBox').style.display = 'block'; renderCart();
+};
+document.getElementById('closeCart').onclick = ()=>{ document.getElementById('cartBox').style.display = 'none'; };
+
+/* clear cart */
+document.getElementById('clearCart').onclick = ()=>{
+  if(confirm('Clear cart?')){ CART = []; saveCart(); updateCartCount(); renderCart(); }
 };
 
-/* add coupon button inside cart */
-(function(){
-  const b=document.createElement('button');
-  b.textContent='Apply Coupon';
-  b.style='width:100%;margin-top:10px;padding:10px;background:#ffd66b;border:none;border-radius:10px;font-weight:900;color:#000';
-  b.onclick=applyCartCoupon;
-  document.getElementById('cartBox').appendChild(b);
-})();
+/* apply cart coupon */
+document.getElementById('applyCartCoupon').onclick = ()=>{
+  const code = prompt('Enter coupon code (AKA25VIP):');
+  if(!code) return;
+  if(code.toUpperCase()==='AKA25VIP' && !cartCoupon){
+    cartCoupon = true; alert('✅ Coupon Applied: ₹25 OFF'); renderCart();
+  } else alert('❌ Invalid or already used');
+};
 
-/* Confetti */
-function startConfetti(){
-  for(let i=0;i<40;i++){
-    const c=document.createElement('div'); c.textContent='🎉'; c.style.position='fixed';
-    c.style.left=Math.random()*100+'%'; c.style.top='-20px'; c.style.fontSize='24px'; c.style.animation='drop 2s linear'; document.body.appendChild(c);
-    setTimeout(()=>c.remove(),2000);
-  }
+/* ----------------- kills coupon (separate UI) ----------------- */
+document.getElementById('applyKill').onclick = ()=>{
+  const v = (document.getElementById('killCoupon').value||'').toUpperCase().trim();
+  if(v==='AKA25VIP'){ document.getElementById('killError').style.display='none'; document.getElementById('final').innerText='Final Price: ₹'+(1050-25); }
+  else { document.getElementById('killError').style.display='block'; document.getElementById('final').innerText='Final Price: ₹1050'; }
+};
+
+/* ----------------- stock bar animate ----------------- */
+let s = 76;
+setInterval(()=>{ if(s>25) s -= Math.random()*1.1; document.getElementById('rssStock').style.width = s+'%'; }, 25000);
+
+/* ----------------- recent orders popup ----------------- */
+const NAMES=["Rohit","Aman","Krish","Aditya","Sahil","Yash","Arjun","Kabir","Ali","Ankit"];
+const CITIES=["Delhi","Mumbai","Pune","Hyd","Jaipur","Indore","Chennai","Patna","Nagpur","Lucknow"];
+const PRODS=["1B Kills","Gold Pass","Silver Pass","Both Pass","1M Diamond","7D Diamond","Bot Monthly"];
+function showRecent(){
+  const msg = `✅ ${NAMES[Math.random()*NAMES.length|0]} from ${CITIES[Math.random()*CITIES.length|0]} bought ${PRODS[Math.random()*PRODS.length|0]}`;
+  const el = document.createElement('div'); el.className='review'; el.style.position='fixed'; el.style.bottom='24px'; el.style.left='24px'; el.style.zIndex=9003;
+  el.innerHTML = `<div style="color:var(--gold1);font-weight:900">${msg}</div>`; document.body.appendChild(el);
+  setTimeout(()=>el.remove(),4200);
 }
-document.head.insertAdjacentHTML('beforeend', '<style>@keyframes drop{to{transform:translateY(100vh);opacity:0}}</style>');
-</script>
+setTimeout(showRecent,8000); setInterval(showRecent,40000+Math.random()*50000);
 
-<!-- ====== CART POPUP (after scripts for layout) ====== -->
-<div id="cartBox">
-  <h3 style="margin:0;color:#e6b83a">🛒 Your Cart</h3>
-  <ul id="cartItems" style="list-style:none;padding:0;margin-top:10px"></ul>
-  <div style="font-weight:800;margin-top:8px">Total: ₹<span id="cartTotal">0</span></div>
-  <button id="checkoutBtn" class="btn" style="width:100%;margin-top:10px;background:#25D366;color:#000">Checkout on WhatsApp</button>
-  <button id="closeCart" class="btn" style="width:100%;margin-top:8px">Close</button>
-</div>
-</body>
-</html>
+/* ----------------- checkout: generate PDF invoice then WA ----------------- */
+// use jsPDF from cdn (window.jspdf)
+async function generateInvoicePDF(){
+  try{
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({unit:'pt',format:'a4'});
+    const title = 'AKA SHOP — Invoice';
+    doc.setFontSize(18); doc.setTextColor(34,24,6); doc.text(title,40,50);
+    doc.setFontSize(11); doc.setTextColor(120,120,120);
+    doc.text('Contact Admin: +91 7980590451',40,68);
+
+    // items
+    let y = 100;
+    doc.setFontSize(12); doc.setTextColor(0,0,0);
+    doc.text('Items:',40,y);
+    y += 18;
+    let total = 0;
+    if(CART.length===0){ doc.text('- No items -',40,y); y+=18; }
+    else{
+      CART.forEach((p,idx)=>{
+        const line = `${p.name} x${p.qty} = ₹${p.price * p.qty}`;
+        doc.text(line,60,y);
+        y += 16;
+        total += p.price * p.qty;
+      });
+    }
+    if(cartCoupon){ doc.text('Coupon (AKA25VIP) applied: -₹25',40,y); y+=16; total -= 25; }
+    y += 6;
+    doc.set
