@@ -3,869 +3,568 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>AKA SHOP — Premium Store (Final)</title>
-<!-- Styles -->
+<title>AKA SHOP — Pro Store (Admin Ready)</title>
+<link rel="icon" href="data:;base64,=">
 <style>
 :root{
-  --bg:#050608;--card:#0c0f13;--muted:#b2b8c2;
-  --gold1:#f7d66d;--gold2:#c89d2e;--accent:#25d366;
-  --radius:14px;--maxw:1100px;
+  --bg:#050608; --card:#0c0f13; --muted:#b2b8c2;
+  --gold1:#f7d66d; --gold2:#c89d2e; --accent:#25d366;
+  --glass: rgba(255,255,255,0.04); --radius:14px; --maxw:1200px;
 }
-*{box-sizing:border-box;font-family:Poppins,Arial,Helvetica,sans-serif}
-body{margin:0;background:var(--bg);color:#fff;padding:16px;display:flex;justify-content:center}
+*{box-sizing:border-box;font-family:Inter, Poppins, Arial, sans-serif}
+body{margin:0;background:linear-gradient(180deg,#050608,#08090b);color:#fff;display:flex;justify-content:center;padding:18px}
 .wrap{width:100%;max-width:var(--maxw)}
-header{background:var(--card);padding:18px;border-radius:16px;border:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;gap:10px;align-items:flex-start;flex-wrap:wrap}
-h1{margin:0;color:var(--gold1);font-size:22px;font-weight:900}
-.sub{margin:0;color:var(--muted);font-size:13px}
-.card{background:var(--card);border-radius:12px;border:1px solid rgba(255,255,255,.05);padding:16px;margin-top:14px}
-.card h2{margin:0 0 6px;color:var(--gold1);font-weight:900;font-size:19px}
-.muted{color:var(--muted);font-size:14px}
-.big{font-weight:900;font-size:24px;color:var(--gold1);margin:8px 0}
-.grid{display:flex;gap:12px;flex-wrap:wrap}
-.box{flex:1;min-width:160px;background:#0b0e10;border-radius:10px;padding:12px;text-align:center;border:1px solid rgba(255,255,255,.04)}
-.old{text-decoration:line-through;color:var(--muted)}
-.now{font-weight:900;color:var(--gold1);font-size:18px;margin-top:6px}
-.btn{display:inline-flex;align-items:center;gap:8px;justify-content:center;padding:10px 16px;border-radius:12px;border:none;cursor:pointer;font-weight:900;background:linear-gradient(45deg,var(--gold1),var(--gold2));color:#000;transition:.18s}
-.btn:hover{transform:translateY(-3px);box-shadow:0 0 12px rgba(255,215,85,.25)}
-.btn-ghost{background:transparent;border:1px solid rgba(255,255,255,.08);color:var(--muted)}
-input[type="text"],input[type="number"],textarea,select{padding:10px;border-radius:10px;background:#000;border:1px solid #222;color:#fff;outline:none}
-#openCart{position:fixed;top:16px;right:16px;z-index:9000;background:linear-gradient(45deg,var(--gold1),var(--gold2));padding:10px 18px;border-radius:40px;border:none;font-weight:900;color:#000;cursor:pointer}
-#cartBox{display:none;position:fixed;left:0;bottom:0;width:100%;height:64%;background:#0f1316;border-top:3px solid var(--gold1);z-index:9001;padding:18px;overflow:auto}
-#cartItems li{margin:8px 0;display:flex;align-items:center;gap:10px;justify-content:space-between}
-.wh{position:fixed;bottom:20px;right:20px;background:var(--accent);width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;color:#000;z-index:9002;box-shadow:0 6px 18px rgba(0,0,0,.4);cursor:pointer}
-.ai{position:fixed;bottom:90px;right:20px;background:#7dd3fc;width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;color:#003049;z-index:9002;box-shadow:0 6px 18px rgba(0,0,0,.4);cursor:pointer}
-.ai-box{display:none;position:fixed;bottom:160px;right:20px;width:320px;background:#0f1316;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px;z-index:9003}
-.ai-log{height:180px;overflow:auto;background:#0b0e10;border-radius:8px;padding:8px;border:1px solid rgba(255,255,255,.06)}
-.ai-in{display:flex;gap:8px;margin-top:8px}
-.reviews{display:flex;flex-direction:column;gap:10px}
-.review{background:#0b0e10;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,.04)}
-.stars{color:#ffd66b;font-weight:900}
-.modal-back{position:fixed;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:9999}
-.modal{background:var(--card);padding:18px;border-radius:12px;width:420px;border:1px solid rgba(255,255,255,.06)}
-.admin-chooser{display:flex;gap:8px;flex-direction:column}
-.admin-btn{display:flex;gap:8px;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:10px;background:#0b0e10;border:1px solid rgba(255,255,255,.04);cursor:pointer}
-@media(max-width:760px){.grid{flex-direction:column}.box{min-width:unset}.ai-box{right:10px;width:300px}.modal{width:92%}}
-/* reviews carousel */
-#reviewCarousel{position:relative;height:140px;overflow:hidden}
-.rev-slide{position:absolute;left:0;right:0;top:0;padding:8px;transition:transform .6s ease,opacity .6s}
-.rev-author{font-weight:800;margin-top:6px}
-.rev-muted{color:var(--muted);font-size:13px;margin-top:6px}
-
-/* Admin UI */
-#adminLoginBtn{position:fixed;top:16px;left:16px;z-index:99999;background:linear-gradient(45deg,#f7d66d,#c89d2e);color:#000;border-radius:12px;padding:8px 12px;font-weight:900;border:none;cursor:pointer}
-.admin-modal-back{position:fixed;left:0;top:0;width:100%;height:100%;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.6);z-index:100000}
-.admin-modal{background:#0c0f13;padding:18px;border-radius:12px;width:420px;border:1px solid rgba(255,255,255,.06);color:#fff}
-.admin-row{display:flex;gap:8px;align-items:center;margin:8px 0}
-.admin-input{padding:8px;border-radius:8px;background:#0b0e10;border:1px solid #222;color:#fff;width:100%}
-.admin-panel{position:fixed;right:18px;top:90px;width:420px;max-height:70vh;overflow:auto;background:#0b0e10;border-radius:12px;padding:12px;border:1px solid rgba(255,255,255,.06);z-index:99999;display:none}
-.admin-panel h3{margin:0 0 8px;color:#f7d66d}
-.admin-field{margin:8px 0;padding:8px;border-radius:8px;background:#0a0d0f;border:1px solid rgba(255,255,255,.03)}
-.small-btn{padding:8px 10px;border-radius:8px;border:none;cursor:pointer;background:linear-gradient(45deg,#f7d66d,#c89d2e);color:#000;font-weight:800}
-.ghost{background:transparent;border:1px solid rgba(255,255,255,.06);color:var(--muted)}
-.banner-pill{display:inline-block;padding:6px 8px;border-radius:8px;background:linear-gradient(45deg,#f7d66d,#c89d2e);color:#000;font-weight:900;margin-left:8px}
+header{display:flex;justify-content:space-between;align-items:center;background:linear-gradient(180deg,var(--card),#0b0d0f);padding:16px;border-radius:12px;border:1px solid rgba(255,255,255,.03)}
+.brand h1{margin:0;color:var(--gold1);font-size:20px;font-weight:900}
+.brand p{margin:4px 0 0;color:var(--muted);font-size:13px}
+.top-banner{display:none;margin-top:12px;border-radius:12px;padding:12px;background:linear-gradient(90deg,var(--gold1),var(--gold2));color:#000;font-weight:900;text-align:center}
+.container{margin-top:14px;display:grid;grid-template-columns:1fr 360px;gap:14px}
+.main{min-width:0}
+.aside{min-width:0}
+.card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.12));border-radius:12px;padding:14px;border:1px solid rgba(255,255,255,.03);margin-bottom:12px}
+.card h2{margin:0;color:var(--gold1);font-weight:900}
+.muted{color:var(--muted);font-size:13px}
+.price{font-weight:900;color:var(--gold1);font-size:18px;margin-top:8px}
+.old{color:rgba(255,255,255,.35);text-decoration:line-through}
+.btn{background:linear-gradient(45deg,var(--gold1),var(--gold2));border:none;color:#000;padding:8px 12px;border-radius:10px;font-weight:900;cursor:pointer}
+.btn-ghost{background:transparent;border:1px solid rgba(255,255,255,.06);padding:8px 10px;border-radius:10px;color:var(--muted);cursor:pointer}
+.small{padding:6px 8px;font-weight:800;border-radius:8px}
+.grid{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
+.box{background:#0b0e10;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,.03);min-width:160px;text-align:center}
+.fab{position:fixed;right:18px;bottom:18px;z-index:999;background:var(--accent);width:64px;height:64px;border-radius:16px;display:flex;align-items:center;justify-content:center;color:#000;font-weight:900;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+.admin-btn{position:fixed;left:18px;top:18px;z-index:999;background:linear-gradient(45deg,var(--gold1),var(--gold2));padding:10px 14px;border-radius:12px;border:none;color:#000;font-weight:900;cursor:pointer}
+.cart-btn{position:fixed;right:18px;top:18px;z-index:999;background:linear-gradient(45deg,var(--gold1),var(--gold2));padding:10px 14px;border-radius:12px;border:none;color:#000;font-weight:900;cursor:pointer}
+.modal-back{position:fixed;left:0;top:0;width:100%;height:100%;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.6);z-index:2000}
+.modal{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.12));padding:18px;border-radius:12px;width:92%;max-width:480px;border:1px solid rgba(255,255,255,.04)}
+.admin-panel{position:fixed;right:18px;top:86px;width:420px;max-height:78vh;overflow:auto;background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(0,0,0,0.12));backdrop-filter: blur(6px);box-shadow:0 10px 40px rgba(0,0,0,.6);border-radius:12px;padding:12px;border:1px solid rgba(255,255,255,.04);z-index:9999;display:none}
+.admin-field{margin-top:10px;padding:8px;border-radius:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.02)}
+.admin-input{width:100%;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,.04);background:#070809;color:#fff}
+.rev-slide{padding:8px;border-radius:8px;background:#0b0e10;margin-bottom:8px;border:1px solid rgba(255,255,255,.03)}
+.footer{margin-top:14px;text-align:center;color:var(--muted);padding-bottom:40px}
+@media(max-width:980px){.container{grid-template-columns:1fr}.admin-panel{position:static;width:100%;max-height:none;margin-top:12px}}
 </style>
-
-<!-- jsPDF for invoice -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
 <div class="wrap">
-
-  <!-- Header -->
   <header>
-    <div>
+    <div class="brand">
       <h1>AKA SHOP — Premium Store</h1>
-      <p class="sub">⚡ Instant Delivery • ✅ Trusted • 💬 24×7 Support</p>
+      <p class="muted">Instant Delivery • Trusted • 24×7 Support</p>
     </div>
-    <button id="currencyBtn" class="btn" style="padding:8px 12px;font-size:13px">💱 Currency: INR (₹)</button>
+    <div style="display:flex;gap:8px;align-items:center">
+      <button id="currencyBtn" class="small">💱 INR</button>
+      <button id="openTimerPanel" class="btn-ghost small">Timer</button>
+    </div>
   </header>
 
-  <!-- Cart opener -->
-  <button id="openCart">🛒 Cart (<span id="cartCount">0</span>)</button>
+  <div id="topBanner" class="top-banner" aria-hidden="true"><span id="bannerText">LIMITED TIME OFFER</span> — ends in <b id="bannerCountdown">00d 00:00:00</b></div>
 
-  <!-- Kills -->
-  <section class="card" id="card-kills">
-    <h2>🔫 Kills Discount</h2>
-    <div class="muted">Buy Kills instantly via Admin</div>
-    <div class="big"><span class="price" data-inr="1050" data-product-key="1B Kills">₹1050</span></div>
+  <div class="container">
+    <div class="main">
 
-    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;align-items:center">
-      <input id="killCoupon" type="text" placeholder="Enter your coupon code" style="min-width:180px">
-      <button id="applyKill" class="btn">🏷 Apply</button>
-      <div id="killError" style="display:none;color:#ff6b6b;font-size:13px">Invalid code — Contact +91 7980590451</div>
-      <div id="killFinal" style="font-weight:900;color:var(--muted);font-size:14px"> </div>
+      <!-- Kills -->
+      <section class="card" id="card-kills">
+        <h2>🔫 1B Kills</h2>
+        <div class="muted">Instant delivery — contact admin after purchase</div>
+        <div class="price"><span data-product-key="1B Kills" data-inr="1050">₹1050</span></div>
+        <div style="margin-top:10px" class="grid">
+          <input id="killCoupon" class="admin-input" placeholder="Enter your coupon code" style="min-width:200px">
+          <button id="applyKill" class="btn">Apply</button>
+        </div>
+        <div style="margin-top:10px;display:flex;gap:8px">
+          <button class="btn buy-btn" data-product="1B Kills">Buy</button>
+          <button class="btn" id="addKills">Add</button>
+        </div>
+        <div id="killMsg" class="muted" style="margin-top:8px"></div>
+      </section>
+
+      <!-- Packs -->
+      <section class="card">
+        <h2>💎 Gems Monthly Pack</h2>
+        <div class="grid" style="margin-top:8px">
+          <div class="box">
+            <div style="font-weight:900">Gold Pass</div>
+            <div class="old">₹599</div>
+            <div class="price"><span data-product-key="Gold Pass" data-inr="270">₹270</span></div>
+            <div style="margin-top:8px"><button class="btn buy-btn" data-product="Gold Pass">Buy</button> <button class="btn add" data-name="Gold Pass" data-price="270">Add</button></div>
+          </div>
+          <div class="box">
+            <div style="font-weight:900">Silver Pass</div>
+            <div class="old">₹299</div>
+            <div class="price"><span data-product-key="Silver Pass" data-inr="120">₹120</span></div>
+            <div style="margin-top:8px"><button class="btn buy-btn" data-product="Silver Pass">Buy</button> <button class="btn add" data-name="Silver Pass" data-price="120">Add</button></div>
+          </div>
+          <div class="box">
+            <div style="font-weight:900">Both Pass</div>
+            <div class="old">₹400</div>
+            <div class="price"><span data-product-key="Both Pass" data-inr="380">₹380</span></div>
+            <div style="margin-top:8px"><button class="btn buy-btn" data-product="Both Pass">Buy</button> <button class="btn add" data-name="Both Pass" data-price="380">Add</button></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Diamond -->
+      <section class="card">
+        <h2>💠 Diamond Pass</h2>
+        <div class="grid" style="margin-top:8px">
+          <div class="box">
+            <div style="font-weight:900">1 Month</div>
+            <div class="old">₹1880</div>
+            <div class="price"><span data-product-key="1M Diamond" data-inr="1820">₹1820</span></div>
+            <div style="margin-top:8px"><button class="btn buy-btn" data-product="1M Diamond">Buy</button> <button class="btn add" data-name="1M Diamond" data-price="1820">Add</button></div>
+          </div>
+          <div class="box">
+            <div style="font-weight:900">7 Day</div>
+            <div class="old">₹190</div>
+            <div class="price"><span data-product-key="7D Diamond" data-inr="190">₹190</span></div>
+            <div style="margin-top:8px"><button class="btn buy-btn" data-product="7D Diamond">Buy</button> <button class="btn add" data-name="7D Diamond" data-price="190">Add</button></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- RSS -->
+      <section class="card">
+        <h2>📦 Recourse (RSS)</h2>
+        <div class="muted">Kingdom Till 1700 — Last Available</div>
+        <div class="grid" style="margin-top:8px">
+          <!-- a few key items shown, more exist in state -->
+          <div class="box"><b>44444B</b><div class="price"><span data-product-key="44444B RSS" data-inr="130">₹130</span></div><div style="margin-top:8px"><button class="btn add" data-name="44444B RSS" data-price="130">Add</button></div></div>
+          <div class="box"><b>44442B</b><div class="price"><span data-product-key="44442B RSS" data-inr="120">₹120</span></div><div style="margin-top:8px"><button class="btn add" data-name="44442B RSS" data-price="120">Add</button></div></div>
+          <div class="box"><b>44440B</b><div class="price"><span data-product-key="44440B RSS" data-inr="110">₹110</span></div><div style="margin-top:8px"><button class="btn add" data-name="44440B RSS" data-price="110">Add</button></div></div>
+          <div class="box"><b>4B Food</b><div class="price"><span data-product-key="4B Food" data-inr="80">₹80</span></div><div style="margin-top:8px"><button class="btn add" data-name="4B Food" data-price="80">Add</button></div></div>
+        </div>
+      </section>
+
+      <!-- Account Sell -->
+      <section class="card">
+        <h2>🧾 Account Sell</h2>
+        <div class="muted">We have sold <b>477+</b> accounts. Stock: <b>300</b></div>
+        <div class="grid" style="margin-top:8px">
+          <div class="box">Mini Account Sell</div>
+          <div class="box">Filler Account Sell</div>
+          <div class="box">Semi Lead Account Sell</div>
+          <div class="box">Lead Account Sell</div>
+          <div class="box">Titan Account Sell</div>
+          <div class="box">Emperor Account Sell</div>
+        </div>
+      </section>
+
+      <!-- Reviews -->
+      <section class="card">
+        <h2>⭐ Reviews • 7K+</h2>
+        <div id="reviewCarousel"></div>
+        <div style="margin-top:10px">
+          <label>Your rating</label>
+          <select id="rating" class="admin-input" style="width:120px"><option value="5">5</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select>
+          <textarea id="reviewText" class="admin-input" rows="2" placeholder="Write review..." style="margin-top:8px"></textarea>
+          <div style="margin-top:8px"><button id="submitReview" class="btn">Submit Review</button> <button id="clearReviews" class="btn-ghost">Clear (Admin)</button></div>
+        </div>
+      </section>
+
+      <!-- Order tracking -->
+      <section class="card">
+        <h2>🕒 Order Tracking</h2>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input id="orderId" class="admin-input" placeholder="Enter your order I'd" style="flex:1">
+          <button id="trackOrderBtn" class="btn">Check</button>
+        </div>
+        <div id="orderResult" style="margin-top:10px;display:none" class="muted"></div>
+      </section>
+
     </div>
 
-    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
-      <button class="btn buy-btn" data-product="1B Kills">🛒 Buy</button>
-      <button class="btn" id="addKills">➕ Add</button>
-    </div>
-  </section>
-
-  <!-- Gems -->
-  <section class="card">
-    <h2>💎 Gems Monthly Pack</h2>
-    <div class="grid" style="margin-top:8px">
-      <div class="box" data-card-for="Gold Pass">
-        Gold Pass
-        <div class="old">₹599</div>
-        <div class="now"><span class="price" data-inr="270" data-product-key="Gold Pass">₹270</span></div>
-        <div style="margin-top:8px"><button class="btn buy-btn" data-product="Gold Pass">🛒 Buy</button> <button class="btn add" data-name="Gold Pass" data-price="270">➕ Add</button></div>
+    <aside class="aside">
+      <div class="card">
+        <h2>🛒 Cart</h2>
+        <div id="miniCart" class="muted">No items yet</div>
+        <div style="margin-top:10px;display:flex;gap:8px">
+          <button id="openCart" class="btn">Open Cart</button>
+          <button id="checkoutBtn" class="btn" style="background:#25d366">Checkout</button>
+        </div>
+        <div style="margin-top:10px" class="muted">Contact Admins:</div>
+        <div style="margin-top:8px">
+          <div style="font-weight:800">ADMIN (AMAN)</div><div class="muted">+91 7980590451</div>
+          <div style="height:8px"></div>
+          <div style="font-weight:800">ADMIN (BAD BOY)</div><div class="muted">+91 9518445112</div>
+        </div>
       </div>
-      <div class="box" data-card-for="Silver Pass">
-        Silver Pass
-        <div class="old">₹299</div>
-        <div class="now"><span class="price" data-inr="120" data-product-key="Silver Pass">₹120</span></div>
-        <div style="margin-top:8px"><button class="btn buy-btn" data-product="Silver Pass">🛒 Buy</button> <button class="btn add" data-name="Silver Pass" data-price="120">➕ Add</button></div>
+
+      <div class="card">
+        <h2>Trust</h2>
+        <div style="font-weight:900;color:var(--gold1)">★★★★★</div>
+        <div class="muted">7K+ Reviews • Instant Delivery</div>
       </div>
-      <div class="box" data-card-for="Both Pass">
-        Both Pass
-        <div class="old">₹400</div>
-        <div class="now"><span class="price" data-inr="380" data-product-key="Both Pass">₹380</span></div>
-        <div style="margin-top:8px"><button class="btn buy-btn" data-product="Both Pass">🛒 Buy</button> <button class="btn add" data-name="Both Pass" data-price="380">➕ Add</button></div>
+
+      <div class="card">
+        <h2>Quick Actions</h2>
+        <div style="display:flex;gap:8px;flex-direction:column">
+          <button id="bannerOnBtn" class="small btn">Banner ON (Admin)</button>
+          <button id="bannerOffBtn" class="small btn-ghost">Banner OFF</button>
+          <button id="adminPanelToggle" class="small btn-ghost">Open Control Center</button>
+        </div>
       </div>
-    </div>
-  </section>
-
-  <!-- Diamond -->
-  <section class="card">
-    <h2>💎 Diamond Pass</h2>
-    <div class="grid" style="margin-top:8px">
-      <div class="box" data-card-for="1M Diamond">
-        1 Month
-        <div class="old">₹1880</div>
-        <div class="now"><span class="price" data-inr="1820" data-product-key="1M Diamond">₹1820</span></div>
-        <div style="margin-top:8px"><button class="btn buy-btn" data-product="1M Diamond">🛒 Buy</button> <button class="btn add" data-name="1M Diamond" data-price="1820">➕ Add</button></div>
-      </div>
-      <div class="box" data-card-for="7D Diamond">
-        7 Day
-        <div class="old">₹190</div>
-        <div class="now"><span class="price" data-inr="190" data-product-key="7D Diamond">₹190</span></div>
-        <div style="margin-top:8px"><button class="btn buy-btn" data-product="7D Diamond">🛒 Buy</button> <button class="btn add" data-name="7D Diamond" data-price="190">➕ Add</button></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- RSS -->
-  <section class="card">
-    <h2>📦 Recourse (RSS)</h2>
-    <div class="muted">Kingdom Till 1700 — Last Available</div>
-    <div class="grid" style="margin-top:8px">
-      <div class="box" data-card-for="44444B RSS"><b>44444B</b><div class="now"><span class="price" data-inr="130" data-product-key="44444B RSS">₹130</span></div><button class="btn add" data-name="44444B RSS" data-price="130">➕ Add</button></div>
-      <div class="box" data-card-for="44442B RSS"><b>44442B</b><div class="now"><span class="price" data-inr="120" data-product-key="44442B RSS">₹120</span></div><button class="btn add" data-name="44442B RSS" data-price="120">➕ Add</button></div>
-      <div class="box" data-card-for="44440B RSS"><b>44440B</b><div class="now"><span class="price" data-inr="110" data-product-key="44440B RSS">₹110</span></div><button class="btn add" data-name="44440B RSS" data-price="110">➕ Add</button></div>
-      <div class="box" data-card-for="22222B RSS"><b>22222B</b><div class="now"><span class="price" data-inr="110" data-product-key="22222B RSS">₹110</span></div><button class="btn add" data-name="22222B RSS" data-price="110">➕ Add</button></div>
-      <div class="box" data-card-for="22220B RSS"><b>22220B</b><div class="now"><span class="price" data-inr="90" data-product-key="22220B RSS">₹90</span></div><button class="btn add" data-name="22220B RSS" data-price="90">➕ Add</button></div>
-      <div class="box" data-card-for="33333B RSS"><b>33333B</b><div class="now"><span class="price" data-inr="120" data-product-key="33333B RSS">₹120</span></div><button class="btn add" data-name="33333B RSS" data-price="120">➕ Add</button></div>
-      <div class="box" data-card-for="22221B RSS"><b>22221B</b><div class="now"><span class="price" data-inr="100" data-product-key="22221B RSS">₹100</span></div><button class="btn add" data-name="22221B RSS" data-price="100">➕ Add</button></div>
-      <div class="box" data-card-for="11111B RSS"><b>11111B</b><div class="now"><span class="price" data-inr="80" data-product-key="11111B RSS">₹80</span></div><button class="btn add" data-name="11111B RSS" data-price="80">➕ Add</button></div>
-      <div class="box" data-card-for="11110B RSS"><b>11110B</b><div class="now"><span class="price" data-inr="80" data-product-key="11110B RSS">₹80</span></div><button class="btn add" data-name="11110B RSS" data-price="80">➕ Add</button></div>
-      <div class="box" data-card-for="4B Food"><b>4B Food Only</b><div class="now"><span class="price" data-inr="80" data-product-key="4B Food">₹80</span></div><button class="btn add" data-name="4B Food" data-price="80">➕ Add</button></div>
-    </div>
-
-    <div style="margin-top:12px">
-      <div class="muted">Stock Status</div>
-      <div style="width:100%;background:#111;height:10px;border-radius:6px;margin-top:6px">
-        <div id="rssStock" style="height:100%;width:76%;background:linear-gradient(90deg,var(--gold1),var(--gold2));border-radius:6px"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Account Sell (info only) -->
-  <section class="card">
-    <h2>🧾 Account Sell</h2>
-    <div class="muted" style="margin-bottom:10px">Premium verified game accounts for sale — trusted & fast transfer.</div>
-    <div style="background:#0b0e10;border:1px solid rgba(255,255,255,.05);border-radius:10px;padding:12px;margin-bottom:12px">
-      <b style="color:var(--gold1)">Description:</b><br/>
-      Hamarey yaha ye sab accounts sell hoti hain aur humne ab tak 
-      <b style="color:var(--gold2)">477+</b> accounts sell kar chuke hain. 
-      Abhi stock me <b style="color:var(--gold1)">300</b> accounts available hain 
-      sell ke liye. Jo chaahein, woh le sakte hain ✅
-    </div>
-    <div class="grid" style="margin-top:8px">
-      <div class="box"><b>Mini Account Sell</b></div>
-      <div class="box"><b>Filler Account Sell</b></div>
-      <div class="box"><b>Semi Lead Account Sell</b></div>
-      <div class="box"><b>Lead Account Sell</b></div>
-      <div class="box"><b>Titan Account Sell</b></div>
-      <div class="box"><b>Emperor Account Sell</b></div>
-    </div>
-  </section>
-
-  <!-- Order Tracking -->
-  <section class="card">
-    <h2>🕒 Order Tracking</h2>
-    <div class="muted">Enter your Order ID below to check current status.</div>
-    <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
-      <input id="orderId" type="text" placeholder="Enter your order I'd" style="flex:1;min-width:180px">
-      <button id="trackOrderBtn" class="btn">🔍 Check Status</button>
-    </div>
-    <div id="orderResult" style="margin-top:16px;padding:12px;border-radius:10px;background:#0b0e10;display:none">
-      <div id="orderStatusText" style="font-weight:900;color:var(--gold1);font-size:16px"></div>
-      <div id="orderProgress" style="margin-top:10px;width:100%;height:10px;border-radius:6px;background:#111">
-        <div id="orderProgressBar" style="height:100%;width:0%;background:linear-gradient(90deg,var(--gold1),var(--gold2));border-radius:6px;transition:width 1s"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Trust + Reviews carousel -->
-  <section class="card">
-    <div style="display:flex;justify-content:space-between;align-items:center">
-      <div>
-        <div style="font-size:20px;font-weight:900;color:var(--gold1)">🛡 Trusted by 1,500+ Gamers</div>
-        <div class="muted" style="margin-top:6px">Verified Gaming Store • Since 2021</div>
-      </div>
-      <div style="text-align:right">
-        <div style="font-weight:900;color:var(--gold1);font-size:18px">★★★★★</div>
-        <div class="muted">7K+ Reviews</div>
-      </div>
-    </div>
-
-    <!-- Carousel -->
-    <div id="reviewCarousel" style="margin-top:12px"></div>
-  </section>
-
-  <!-- Write Review -->
-  <section class="card">
-    <h2>🖋 Write a Review</h2>
-    <div class="muted">Share your experience (it helps us grow!)</div>
-    <div style="margin-top:10px">
-      <label for="rating">Your Rating:</label><br/>
-      <select id="rating" style="padding:8px;border-radius:8px;background:#000;color:#fff;border:1px solid #222">
-        <option value="5">⭐⭐⭐⭐⭐ (Excellent)</option>
-        <option value="4">⭐⭐⭐⭐ (Good)</option>
-        <option value="3">⭐⭐⭐ (Average)</option>
-        <option value="2">⭐⭐ (Poor)</option>
-        <option value="1">⭐ (Bad)</option>
-      </select>
-    </div>
-    <div style="margin-top:8px">
-      <textarea id="reviewText" rows="3" placeholder="Write your review here..." style="width:100%;padding:10px;border-radius:8px;background:#000;border:1px solid #222;color:#fff"></textarea>
-    </div>
-    <div style="margin-top:10px;display:flex;gap:8px">
-      <button id="submitReview" class="btn">✅ Submit Review</button>
-      <button id="clearReviews" class="btn btn-ghost">🧹 Clear All (Admin)</button>
-    </div>
-  </section>
-
-  <footer class="muted" style="text-align:center;margin-top:14px">
-    Contact Admins: <b>ADMIN (AMAN) +91 7980590451</b> • <b>ADMIN (BAD BOY) +91 9518445112</b>
-  </footer>
-</div>
-
-<!-- Floating chat / AI / WA -->
-<div style="position:fixed;bottom:20px;right:20px;z-index:9998;display:flex;flex-direction:column;gap:10px;align-items:flex-end">
-  <div id="chatChooser" style="display:none;background:#0f1316;border-radius:12px;padding:8px;border:1px solid rgba(255,255,255,.06);box-shadow:0 10px 30px rgba(0,0,0,.4)">
-    <div class="admin-btn" data-admin="ADMIN (AMAN)" data-phone="917980590451">
-      <div><b>ADMIN (AMAN)</b><div class="muted" style="font-size:12px">+91 7980590451</div></div>
-      <div class="admin-label">Chat</div>
-    </div>
-    <div style="height:8px"></div>
-    <div class="admin-btn" data-admin="ADMIN (BAD BOY)" data-phone="919518445112">
-      <div><b>ADMIN (BAD BOY)</b><div class="muted" style="font-size:12px">+91 9518445112</div></div>
-      <div class="admin-label">Chat</div>
-    </div>
+    </aside>
   </div>
 
-  <div class="ai" id="aiBtn" title="AI Help">🤖</div>
-  <a class="wh" id="whMain" title="Contact Admin" href="javascript:void(0)" style="background:var(--accent);width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;color:#000;box-shadow:0 6px 18px rgba(0,0,0,.4)">💬</a>
+  <div class="footer">© AKA SHOP • Built for GitHub Pages</div>
 </div>
 
-<!-- Admin chooser modal (for buy buttons) -->
-<div class="modal-back" id="adminModal">
-  <div class="modal">
-    <h3 style="margin:0 0 8px;color:var(--gold1)">Choose Admin</h3>
-    <div style="margin-bottom:8px" id="adminProductLabel"></div>
-    <div class="admin-chooser">
-      <div class="admin-btn" id="adminA" data-admin="ADMIN (AMAN)" data-phone="917980590451">
-        <div><b>ADMIN (AMAN)</b><div class="muted" style="font-size:12px">+91 7980590451</div></div>
-        <div><button class="btn" id="chooseA">Message</button></div>
-      </div>
-      <div style="height:8px"></div>
-      <div class="admin-btn" id="adminB" data-admin="ADMIN (BAD BOY)" data-phone="919518445112">
-        <div><b>ADMIN (BAD BOY)</b><div class="muted" style="font-size:12px">+91 9518445112</div></div>
-        <div><button class="btn" id="chooseB">Message</button></div>
-      </div>
-    </div>
-    <div style="margin-top:10px;text-align:right"><button class="btn btn-ghost" id="adminCancel">Cancel</button></div>
-  </div>
-</div>
+<!-- Floating chat + cart -->
+<div id="chatFab" class="fab" title="Chat">💬</div>
+<button id="adminLoginBtn" class="admin-btn">Admin Login</button>
+<button id="cartFab" class="cart-btn">🛒</button>
 
-<!-- Cart modal -->
-<div id="cartBox">
-  <h3 style="margin:0 0 8px;color:var(--gold1)">🛒 Your Cart</h3>
-  <ul id="cartItems" style="list-style:none;padding:0;margin:0 0 10px"></ul>
-
-  <div style="display:flex;gap:8px;align-items:center">
-    <div style="flex:1">Total: <b><span id="cartTotal">₹0</span></b></div>
-    <div style="display:flex;gap:8px">
-      <button id="cartCoupon" class="btn">🏷 Apply Coupon</button>
-      <button id="clearCart" class="btn btn-ghost">🧹 Clear</button>
-    </div>
-  </div>
-
-  <div style="margin-top:12px;display:flex;gap:10px">
-    <button id="downloadInvoice" class="btn" style="background:linear-gradient(45deg,#9ee7b1,#3bc06d)">📥 Invoice</button>
-    <button id="checkoutBtn" class="btn" style="flex:1;background:#25d366;color:#000">✅ Checkout on WhatsApp</button>
-  </div>
-
-  <div style="margin-top:10px"><button id="closeCart" class="btn btn-ghost" style="width:100%">Close</button></div>
-</div>
-
-<!-- Buyer modal (used for checkout/invoice) -->
-<div class="modal-back" id="buyerModal">
-  <div class="modal">
-    <h3 style="margin:0 0 8px;color:var(--gold1)">Buyer Details</h3>
-    <div style="margin-bottom:8px"><input id="buyerName" type="text" placeholder="Full name" class="admin-input"></div>
-    <div style="margin-bottom:8px"><input id="buyerPhone" type="text" placeholder="WhatsApp number (e.g. +9198... or 9198...)" class="admin-input"></div>
-    <div style="display:flex;gap:8px">
-      <button id="buyerProceed" class="btn" style="flex:1">Generate Invoice & Checkout</button>
-      <button id="buyerCancel" class="btn btn-ghost" style="flex:1">Cancel</button>
-    </div>
-  </div>
-</div>
-
-<!-- Admin Login (button + modal) -->
-<button id="adminLoginBtn">Admin Login</button>
-<div class="admin-modal-back" id="adminLoginModal">
-  <div class="admin-modal">
+<!-- Modals -->
+<div class="modal-back" id="adminLoginModal">
+  <div class="modal" role="dialog">
     <h3>Admin Login</h3>
-    <div class="admin-row">
-      <label style="width:90px">Username</label>
-      <input id="adminUser" class="admin-input" placeholder="AKASHOPADMIN">
-    </div>
-    <div class="admin-row">
-      <label style="width:90px">Password</label>
-      <input id="adminPass" type="password" class="admin-input" placeholder="AKASHOP2021">
-    </div>
-    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px">
-      <button id="adminLoginSubmit" class="small-btn">Login</button>
-      <button id="adminLoginCancel" class="small-btn ghost">Cancel</button>
+    <input id="adminUser" class="admin-input" placeholder="Username">
+    <input id="adminPass" class="admin-input" type="password" placeholder="Password">
+    <div style="display:flex;gap:8px;margin-top:10px;justify-content:flex-end">
+      <button id="adminLoginSubmit" class="btn">Login</button>
+      <button id="adminLoginCancel" class="btn-ghost">Cancel</button>
     </div>
     <div id="adminLoginMsg" style="color:#ff9b9b;margin-top:8px;display:none"></div>
-    <div style="margin-top:8px;color:var(--muted);font-size:12px">Use <b>AKASHOPADMIN</b> / <b>AKASHOP2021</b></div>
   </div>
 </div>
 
-<!-- Admin Panel -->
-<div class="admin-panel" id="adminPanel">
-  <h3>Admin Panel</h3>
-  <div style="display:flex;justify-content:space-between;align-items:center">
-    <div style="font-weight:800">Signed in as <span id="adminLoggedAs">AKASHOPADMIN</span></div>
-    <div><button id="adminLogout" class="small-btn ghost">Logout</button></div>
+<div class="modal-back" id="chooserModal">
+  <div class="modal" role="dialog">
+    <h3>Choose Admin to Contact</h3>
+    <div style="margin-top:8px" id="chooserProductLabel"></div>
+    <div style="margin-top:12px;display:flex;gap:8px;flex-direction:column">
+      <div><button id="msgA" class="btn">Message ADMIN (AMAN)</button></div>
+      <div><button id="msgB" class="btn">Message ADMIN (BAD BOY)</button></div>
+      <div style="text-align:right"><button id="chooserCancel" class="btn-ghost">Cancel</button></div>
+    </div>
   </div>
-
-  <div style="margin-top:12px">
-    <div style="font-weight:900;margin-bottom:6px">Price Controls</div>
-    <div id="adminPriceList"></div>
-  </div>
-
-  <div style="margin-top:12px">
-    <div style="font-weight:900;margin-bottom:6px">Limited-time Banners</div>
-    <div id="adminBannerList"></div>
-  </div>
-
-  <div style="margin-top:12px;display:flex;gap:8px">
-    <button id="adminSave" class="small-btn">Save Changes</button>
-    <button id="adminReset" class="small-btn ghost">Reset Defaults</button>
-  </div>
-
-  <div style="margin-top:8px;color:var(--muted);font-size:13px">Changes persist locally (localStorage). For server-side secure auth ask me and I will provide a backend.</div>
 </div>
 
-<!-- Audio -->
-<audio id="clickSfx" src="https://cdn.jsdelivr.net/gh/zenxadius/sfx/menu-click.mp3"></audio>
-<audio id="orderSfx" src="https://cdn.jsdelivr.net/gh/zenxadius/sfx/coin.mp3"></audio>
+<div class="modal-back" id="cartModal">
+  <div class="modal" role="dialog">
+    <h3>Your Cart</h3>
+    <ul id="cartItems" style="list-style:none;padding:0;margin:0"></ul>
+    <div style="margin-top:10px">Total: <b id="cartTotal">₹0</b></div>
+    <div style="display:flex;gap:8px;margin-top:12px">
+      <button id="cartCheckout" class="btn">Checkout (WhatsApp)</button>
+      <button id="downloadInvoice" class="btn">Download Invoice</button>
+      <button id="closeCart" class="btn-ghost">Close</button>
+    </div>
+  </div>
+</div>
 
-<!-- jsPDF -->
+<div class="modal-back" id="buyerModal">
+  <div class="modal" role="dialog">
+    <h3>Buyer Details</h3>
+    <input id="buyerName" class="admin-input" placeholder="Full name">
+    <input id="buyerPhone" class="admin-input" placeholder="WhatsApp (e.g. +9198...)">
+    <div style="display:flex;gap:8px;margin-top:10px">
+      <button id="buyerProceed" class="btn">Proceed</button>
+      <button id="buyerCancel" class="btn-ghost">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Admin Control Center -->
+<div class="admin-panel" id="adminPanel" aria-hidden="true">
+  <h3 style="margin:0 0 8px;color:var(--gold1)">Control Center</h3>
+  <div class="admin-field">
+    <div style="font-weight:800">Global Banner / Countdown</div>
+    <input id="adminBannerText" class="admin-input" placeholder="Banner text (e.g. KILLS SALE)">
+    <input id="adminBannerExpiry" class="admin-input" placeholder="Expiry (ISO) e.g. 2025-12-31T23:59:00" style="margin-top:8px">
+    <div style="display:flex;gap:8px;margin-top:8px">
+      <button id="adminBannerOn" class="btn small">Turn ON</button>
+      <button id="adminBannerOff" class="btn-ghost small">Turn OFF</button>
+    </div>
+  </div>
+
+  <div class="admin-field">
+    <div style="font-weight:800">Product Price Controls</div>
+    <div id="adminPriceList" style="margin-top:8px"></div>
+    <div style="display:flex;gap:8px;margin-top:8px;justify-content:flex-end">
+      <button id="adminSave" class="small btn">Save</button>
+      <button id="adminReset" class="small btn-ghost">Reset</button>
+    </div>
+  </div>
+
+  <div style="margin-top:10px" class="muted">Changes stored locally (localStorage). For server-side persistence ask me and I'll provide backend steps.</div>
+</div>
+
+<!-- scripts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-<!-- ====== SCRIPT: Full functionality & admin integration ====== -->
 <script>
-/* ================== CONFIG ================== */
-// Admins for chat / buy chooser
+/* PRO FINAL JS - All features wired */
+document.addEventListener('DOMContentLoaded', ()=>{
+
+/* -------- CONFIG -------- */
 const ADMINS = [
-  { key: 'AMAN', label: 'ADMIN (AMAN)', phone: '917980590451' },
-  { key: 'BADBOY', label: 'ADMIN (BAD BOY)', phone: '919518445112' }
+  { key:'AMAN', label:'ADMIN (AMAN)', phone:'917980590451' },
+  { key:'BADBOY', label:'ADMIN (BAD BOY)', phone:'919518445112' }
 ];
-// Hidden coupon code for kills / cart
-const SECRET_COUPON = 'AKA25VIP';
-const SECRET_COUPON_OFF = 25;
+const SECRET_COUPON='AKA25VIP', SECRET_COUPON_OFF=25;
+const ADMIN_USER='AKASHOPADMIN', ADMIN_PASS='AKASHOP2021';
+const LS_STATE='AKASHOP_PRO_STATE_V1', LS_CART='AKASHOP_PRO_CART_V1', LS_REV='AKASHOP_PRO_REV_V1', LS_ADMIN='AKASHOP_PRO_ADMIN_V1';
 
-/* ================ HELPERS ================ */
-const $ = sel => document.querySelector(sel);
-const $$ = sel => Array.from(document.querySelectorAll(sel));
-const playClick = ()=>{ try{ document.getElementById('clickSfx').currentTime=0; document.getElementById('clickSfx').play(); }catch(e){} }
-const playOrder = ()=>{ try{ document.getElementById('orderSfx').currentTime=0; document.getElementById('orderSfx').play(); }catch(e){} }
+/* -------- default state -------- */
+const DEFAULT = {
+  products: {
+    '1B Kills': { price:1050 },
+    'Gold Pass': { price:270 }, 'Silver Pass':{price:120}, 'Both Pass':{price:380},
+    '1M Diamond':{price:1820}, '7D Diamond':{price:190},
+    '44444B RSS':{price:130}, '44442B RSS':{price:120}, '44440B RSS':{price:110},
+    '22222B RSS':{price:110}, '22220B RSS':{price:90}, '33333B RSS':{price:120},
+    '22221B RSS':{price:100}, '11111B RSS':{price:80}, '11110B RSS':{price:80}, '4B Food':{price:80}
+  },
+  banner: { enabled:false, text:'', expiryISO:'' }
+};
 
-/* ================ Currency ================ */
-let currency = 'INR';
-const RATE = 0.012; // approx conversion for display
+/* -------- helpers -------- */
+const $ = s=>document.querySelector(s), $$ = s=>Array.from(document.querySelectorAll(s));
+const load = (k, fallback)=>{ try{ const r=localStorage.getItem(k); return r?JSON.parse(r):fallback; }catch(e){ return fallback; } };
+const save = (k,v)=>localStorage.setItem(k,JSON.stringify(v));
+
+/* -------- load state/cart/reviews -------- */
+let STATE = Object.assign({}, DEFAULT, load(LS_STATE, {}));
+STATE.products = Object.assign({}, DEFAULT.products, (STATE.products||{}));
+let CART = load(LS_CART, []);
+let REVIEWS = load(LS_REV, []);
+let ADMIN_LOGGED = localStorage.getItem(LS_ADMIN) === 'true';
+
+/* -------- currency -------- */
+let currency='INR'; const RATE=0.012;
 function updateCurrencyUI(){
-  $$('[data-inr]').forEach(el=>{
-    const inr = Number(el.dataset.inr);
-    el.textContent = (currency==='INR') ? ('₹'+inr) : ('$'+(inr*RATE).toFixed(2));
+  $$('[data-inr]').forEach(span=>{
+    const inr = Number(span.dataset.inr||0);
+    span.textContent = (currency==='INR')?('₹'+inr):('$'+(inr*RATE).toFixed(2));
   });
-  $('#cartTotal') && ($('#cartTotal').textContent = (currency==='INR') ? '₹'+calcTotalINR() : '$'+(calcTotalINR()*RATE).toFixed(2));
-  $('#currencyBtn').textContent = (currency==='INR') ? '💱 Currency: INR (₹)' : '💱 Currency: USD ($)';
+  $('#currencyBtn').textContent = (currency==='INR')?'💱 INR':'💱 USD';
 }
-$('#currencyBtn').addEventListener('click', ()=>{ currency = (currency==='INR')?'USD':'INR'; updateCurrencyUI(); });
+$('#currencyBtn').addEventListener('click', ()=>{ currency = (currency==='INR'?'USD':'INR'); updateCurrencyUI(); });
 
-/* ================ CART ================ */
-let CART = JSON.parse(localStorage.getItem('AKA_CART')||'[]');
-let cartCoupon = false;
-function saveCart(){ localStorage.setItem('AKA_CART', JSON.stringify(CART)); }
-function countCart(){ $('#cartCount').textContent = CART.reduce((s,i)=>s+i.qty,0); }
-function calcTotalINR(){ let t=0; CART.forEach(p=>t+=p.price*p.qty); if(cartCoupon) t=Math.max(0,t-SECRET_COUPON_OFF); return t; }
-
-function renderCart(){
-  const ul = $('#cartItems');
-  if(!CART.length){ ul.innerHTML = '<div class="muted">Your cart is empty</div>'; $('#cartTotal').textContent = (currency==='INR') ? '₹0' : '$0.00'; return; }
-  ul.innerHTML = CART.map((p,i)=>`
-    <li>
-      <div style="flex:1">
-        <div style="font-weight:800">${p.name}</div>
-        <div class="muted">₹${p.price} ×</div>
-      </div>
-      <div style="display:flex;gap:8px;align-items:center">
-        <input type="number" min="1" max="10" value="${p.qty}" style="width:64px;padding:6px;border-radius:8px;background:#030405;color:#fff;border:1px solid #222" onchange="updateQty(${i},this.value)">
-        <div style="font-weight:900">${currency==='INR'?'₹'+(p.price*p.qty):'$'+((p.price*p.qty)*RATE).toFixed(2)}</div>
-        <button onclick="removeItem(${i})" style="background:none;border:none;color:#ff6b6b;font-weight:900;font-size:18px">✖</button>
-      </div>
-    </li>
-  `).join('');
-  $('#cartTotal').textContent = (currency==='INR') ? '₹'+calcTotalINR() : '$'+(calcTotalINR()*RATE).toFixed(2);
-}
-
-window.updateQty = (i,val)=>{ CART[i].qty = Math.max(1, Math.min(10, Number(val)||1)); saveCart(); countCart(); renderCart(); }
-window.removeItem = i => { CART.splice(i,1); saveCart(); countCart(); renderCart(); }
-
-function addToCart(name, price){
-  price = Number(price);
-  const f = CART.find(x=>x.name===name);
-  if(f) f.qty = Math.min(10, f.qty+1); else CART.push({name, price: price, qty:1});
-  saveCart(); countCart(); renderCart(); playClick(); alert(name + ' added to cart ✅');
-}
-
-/* add buttons */
-document.body.addEventListener('click', e=>{
-  const t = e.target.closest('.add');
-  if(t) addToCart(t.dataset.name, t.dataset.price);
-});
-$('#addKills').addEventListener('click', ()=> addToCart('1B Kills', getCurrentKillPrice()));
-
-/* open / close cart */
-$('#openCart').addEventListener('click', ()=>{ $('#cartBox').style.display='block'; renderCart(); });
-$('#closeCart').addEventListener('click', ()=> $('#cartBox').style.display='none');
-$('#clearCart').addEventListener('click', ()=>{ if(confirm('Clear cart?')){ CART=[]; saveCart(); countCart(); renderCart(); }});
-
-/* cart coupon button (extra) */
-$('#cartCoupon').addEventListener('click', ()=>{ const c = prompt('Enter coupon code (AKA25VIP):'); if(c && c.toUpperCase()===SECRET_COUPON && !cartCoupon){ cartCoupon=true; alert('✅ ₹25 OFF applied to cart'); renderCart(); } else alert('❌ Invalid / already used'); });
-
-countCart(); renderCart(); updateCurrencyUI();
-
-/* ================ KILLS COUPON (UI & logic) ================ */
-let killCouponApplied = false;
-function getCurrentKillPrice(){
-  const base = 1050;
-  return (killCouponApplied ? Math.max(0, base - SECRET_COUPON_OFF) : base);
-}
-function updateKillsUI(){
-  const span = $('#card-kills .price');
-  span.dataset.inr = getCurrentKillPrice();
+/* -------- apply state prices to page -------- */
+function applyPrices(){
+  Object.keys(STATE.products).forEach(k=>{
+    $$('[data-product-key]').forEach(span=>{ if(span.dataset.productKey===k) span.dataset.inr = STATE.products[k].price; });
+    $$('[data-name]').forEach(btn=>{ if(btn.dataset.name===k) btn.dataset.price = STATE.products[k].price; });
+  });
   updateCurrencyUI();
-  $('#killFinal').textContent = killCouponApplied ? ('Final Price: ₹' + getCurrentKillPrice()) : '';
 }
-$('#applyKill').addEventListener('click', ()=>{
-  const v = ($('#killCoupon').value||'').trim().toUpperCase();
-  if(v===SECRET_COUPON){ killCouponApplied = true; $('#killError').style.display='none'; updateKillsUI(); alert('✅ Coupon applied — ₹25 off on Kills'); }
-  else { killCouponApplied = false; $('#killError').style.display='block'; $('#killFinal').textContent=''; updateKillsUI(); }
-});
+applyPrices();
 
-/* ================ ORDER TRACKING ================ */
-$('#trackOrderBtn').addEventListener('click', ()=>{
-  const orderId = $('#orderId').value.trim();
-  if(!orderId){ alert('Please enter your Order ID'); return; }
-  const statuses = [
-    { text: "🟡 Processing your order...", progress: 35 },
-    { text: "🟠 Preparing for delivery...", progress: 55 },
-    { text: "🟠 Out for Delivery...", progress: 80 },
-    { text: "🟢 Delivered Successfully!", progress: 100 },
-    { text: "🔴 Waiting for confirmation", progress: 20 }
-  ];
-  const s = statuses[Math.floor(Math.random()*statuses.length)];
-  $('#orderResult').style.display='block';
-  $('#orderStatusText').textContent = s.text;
-  $('#orderProgressBar').style.width = s.progress + '%';
-});
-
-/* ================ Reviews Carousel (auto) + user reviews ================ */
-const FAKE_REVIEWS = [
-  { name:'Rohan', country:'India', text:'Fast delivery — gems activated within 5 minutes! Highly recommended.' },
-  { name:'Lisa', country:'USA', text:'Great service and quick response. Loved the premium feel.' },
-  { name:'Ananya', country:'India', text:'Bank bot worked smooth. Trusted seller.' },
-  { name:'Sofia', country:'Spain', text:'Perfect delivery and instant activation. Very satisfied.' },
-  { name:'Vikas', country:'India', text:'Kills delivered exactly as promised. Legit.' },
-  { name:'Emma', country:'UK', text:'Excellent support. Gems added super fast.' },
-  { name:'Mohit', country:'India', text:'Amazing service and fair prices. Will buy again.' },
-  { name:'Meera', country:'India', text:'Quick and reliable. Good communication.' },
-  { name:'Carlos', country:'Brazil', text:'Top quality service. Recommended for all players.' },
-  { name:'Aisha', country:'UAE', text:'Smooth process, great support and instant activation.' }
-];
-let revIndex = 0;
-function renderCarousel(){
-  const wrap = document.getElementById('reviewCarousel');
-  wrap.innerHTML='';
-  const len = FAKE_REVIEWS.length;
-  for(let i=0;i<2;i++){
-    const idx = (revIndex + i) % len;
-    const r = FAKE_REVIEWS[idx];
-    const slide = document.createElement('div');
-    slide.className = 'rev-slide';
-    slide.style.top = (i*72) + 'px';
-    slide.style.opacity = i===0?1:0.85;
-    slide.style.transform = `translateY(0)`;
-    slide.innerHTML = `<div class="stars">★★★★★</div><div style="font-weight:800;margin-top:6px">${r.text}</div><div class="rev-author muted">— ${r.name}, ${r.country}</div>`;
-    wrap.appendChild(slide);
-  }
+/* -------- CART UI -------- */
+function calcTotal(){ return CART.reduce((s,p)=> s + (Number(p.price)*Number(p.qty||1)), 0); }
+function renderMiniCart(){
+  const mini = $('#miniCart');
+  if(!CART.length) mini.innerHTML='No items yet';
+  else mini.innerHTML = CART.map(p=>`${p.name} x${p.qty||1} — ₹${p.price}`).join('<br>');
+  $('#cartFab').textContent = '🛒 '+(CART.length?`(${CART.length})`:'');
 }
-function advanceCarousel(){ revIndex = (revIndex + 1) % FAKE_REVIEWS.length; const wrap = document.getElementById('reviewCarousel'); wrap.querySelectorAll('.rev-slide').forEach((el,i)=> el.style.opacity = 0); setTimeout(()=> renderCarousel(), 400); }
-renderCarousel();
-setInterval(advanceCarousel, 4500);
-
-/* user reviews */
-let USER_REVIEWS = JSON.parse(localStorage.getItem('AKA_REVIEWS') || '[]');
-function saveReviews(){ localStorage.setItem('AKA_REVIEWS', JSON.stringify(USER_REVIEWS)); }
-function renderUserReviews(){ const box=document.getElementById('reviewsList'); if(!box) return; if(!USER_REVIEWS.length){ box.innerHTML = '<div class="muted">No user reviews yet. Be the first!</div>'; return; } box.innerHTML = USER_REVIEWS.map(r=>`<div class="review"><div class="stars">${'⭐'.repeat(r.rating)}</div><div style="font-weight:800;margin-top:6px">${r.text}</div><div class="muted">— ${r.date}</div></div>`).join(''); }
-renderUserReviews();
-$('#submitReview').addEventListener('click', ()=>{ const rating = parseInt($('#rating').value); const text = $('#reviewText').value.trim(); if(!text){ alert('Please write your review!'); return; } USER_REVIEWS.unshift({ rating, text, date: new Date().toLocaleDateString() }); if(USER_REVIEWS.length>200) USER_REVIEWS=USER_REVIEWS.slice(0,200); saveReviews(); renderUserReviews(); $('#reviewText').value=''; alert('Thanks for your feedback! 🌟'); });
-$('#clearReviews').addEventListener('click', ()=>{ if(confirm('Clear all reviews?')){ USER_REVIEWS=[]; saveReviews(); renderUserReviews(); }});
-
-/* ================ AI chat (local) ================ */
-const aiBtn = $('#aiBtn'), aiBox = $('#aiBox'), aiLog = $('#aiLog'), aiInput = $('#aiInput');
-aiBtn.addEventListener('click', ()=> aiBox.style.display = (aiBox.style.display==='block'?'none':'block'));
-$('#aiSend').addEventListener('click', sendAI);
-aiInput.addEventListener('keydown', e=>{ if(e.key==='Enter') sendAI(); });
-function addAI(who, text){ const d=document.createElement('div'); d.style.margin='6px 0'; d.innerHTML = `<div style="font-weight:800;color:${who==='you'?'#f7d66d':'#9ee7ff'}">${who==='you'?'You':'AI'}</div><div class="muted" style="color:#ddd">${text}</div>`; aiLog.appendChild(d); aiLog.scrollTop = aiLog.scrollHeight; }
-function sendAI(){ const q = (aiInput.value||'').trim(); if(!q) return; addAI('you', q); aiInput.value=''; setTimeout(()=>{ let r='Thanks! Our admin will guide you.'; if(/kill|kills/i.test(q)) r='1B Kills price ₹'+getCurrentKillPrice()+'. Use AKA25VIP for ₹25 off.'; if(/gem|pass/i.test(q)) r='Gold ₹270, Silver ₹120, Both ₹380. Delivery in 5–10 min.'; if(/bot|bank/i.test(q)) r='Bank Bot plans: ₹150 monthly → ₹1450 yearly.'; if(/rss|recourse/i.test(q)) r='RSS examples: 44444B ₹130, 44442B ₹120, 4B food ₹80.'; addAI('bot', r); },500); }
-
-/* ================ Buy buttons -> Admin chooser (works for Buy) ================ */
-let lastProductName = '';
-$$('.buy-btn').forEach(btn=>{
-  btn.addEventListener('click', ()=>{
-    lastProductName = btn.dataset.product || btn.getAttribute('data-product') || 'Product';
-    $('#adminProductLabel').textContent = 'Product: ' + lastProductName;
-    $('#adminModal').style.display = 'flex';
+function renderCartModal(){
+  const ul = $('#cartItems'); ul.innerHTML = '';
+  if(!CART.length){ ul.innerHTML = '<li class="muted">Empty cart</li>'; $('#cartTotal').textContent='₹0'; return; }
+  CART.forEach((p,i)=>{
+    const li = document.createElement('li');
+    li.style.display='flex'; li.style.justifyContent='space-between'; li.style.alignItems='center'; li.style.marginBottom='8px';
+    li.innerHTML = `<div style="flex:1"><b>${p.name}</b><div class="muted">₹${p.price} × ${p.qty||1}</div></div>
+                    <div style="display:flex;gap:8px;align-items:center"><input type="number" value="${p.qty||1}" min="1" max="10" data-idx="${i}" style="width:64px;padding:6px;border-radius:6px;background:#070809;color:#fff;border:1px solid #222"></input>
+                    <button data-remove="${i}" class="btn-ghost">Remove</button></div>`;
+    ul.appendChild(li);
   });
-});
-$('#adminCancel').addEventListener('click', ()=> $('#adminModal').style.display='none');
-
-// Choose admin handlers
-$('#chooseA').addEventListener('click', ()=>{
-  const admin = ADMINS[0];
-  const message = `Hey ${admin.label}, I want to buy ${lastProductName}`;
-  window.open(`https://wa.me/${admin.phone}?text=${encodeURIComponent(message)}`);
-  $('#adminModal').style.display='none';
-});
-$('#chooseB').addEventListener('click', ()=>{
-  const admin = ADMINS[1];
-  const message = `Hey ${admin.label}, I want to buy ${lastProductName}`;
-  window.open(`https://wa.me/${admin.phone}?text=${encodeURIComponent(message)}`);
-  $('#adminModal').style.display='none';
-});
-
-/* Floating chat chooser */
-$('#whMain').addEventListener('click', ()=>{ const el = document.getElementById('chatChooser'); el.style.display = (el.style.display==='block') ? 'none' : 'block'; });
-$$('#chatChooser .admin-btn').forEach(item=>{
-  item.addEventListener('click', ()=>{ const phone = item.dataset.phone; const adminName = item.querySelector('b').textContent; const msg = `Hey ${adminName}, I need support from website.`; window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`); document.getElementById('chatChooser').style.display='none'; });
-});
-
-/* ================ Invoice (jsPDF) ================ */
-function svgToPngDataUrl(svgString,width=80,height=80){
-  return new Promise((resolve,reject)=>{
-    const img = new Image();
-    const svg = new Blob([svgString], {type:'image/svg+xml;charset=utf-8'});
-    const url = URL.createObjectURL(svg);
-    img.onload = ()=>{
-      try{
-        const canvas = document.createElement('canvas');
-        canvas.width = width; canvas.height = height;
-        const ctx = canvas.getContext('2d');
-        ctx.clearRect(0,0,canvas.width,canvas.height);
-        ctx.drawImage(img,0,0,width,height);
-        const dataUrl = canvas.toDataURL('image/png');
-        URL.revokeObjectURL(url);
-        resolve(dataUrl);
-      }catch(err){ URL.revokeObjectURL(url); reject(err); }
-    };
-    img.onerror = (e)=>{ URL.revokeObjectURL(url); reject(e); };
-    img.src = url;
-  });
-}
-function productSvg(name){
-  const initials = name.split(' ').map(s=>s[0]).slice(0,2).join('').toUpperCase();
-  const bg = '#2b2b2b';
-  const gold = '#f7d66d';
-  return `<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><rect width='100%' height='100%' fill='${bg}' rx='16' /><circle cx='60' cy='40' r='26' fill='${gold}' opacity='0.18'/><text x='50%' y='62%' dominant-baseline='middle' text-anchor='middle' font-family='Poppins, Arial' font-size='34' fill='${gold}' font-weight='800'>${initials}</text></svg>`;
+  $('#cartTotal').textContent = '₹'+calcTotal();
+  // attach listeners for inputs and remove
+  $$('input[data-idx]').forEach(inp=> inp.addEventListener('change', e=>{ const i=Number(e.target.dataset.idx); CART[i].qty = Math.max(1,Math.min(10,Number(e.target.value)||1)); save(LS_CART,CART); renderMiniCart(); renderCartModal(); }));
+  $$('button[data-remove]').forEach(b=> b.addEventListener('click', e=>{ const i=Number(e.target.dataset.remove); CART.splice(i,1); save(LS_CART,CART); renderMiniCart(); renderCartModal(); }));
 }
 
-async function generateInvoicePDF(buyer){
+/* add-to-cart handlers */
+document.body.addEventListener('click', e=>{
+  const add = e.target.closest('.add');
+  if(add){ addToCart(add.dataset.name, Number(add.dataset.price)); }
+});
+$('#addKills') && $('#addKills').addEventListener('click', ()=> addToCart('1B Kills', Number($('[data-product-key="1B Kills"]').dataset.inr || STATE.products['1B Kills'].price)));
+function addToCart(name, price){
+  const found = CART.find(x=>x.name===name);
+  if(found) found.qty = Math.min(10,(found.qty||1)+1);
+  else CART.push({ name, price:Number(price), qty:1 });
+  save(LS_CART, CART);
+  renderMiniCart();
+}
+
+/* Buy buttons -> chooser modal */
+let lastBuyProduct='';
+$$('.buy-btn').forEach(b=> b.addEventListener('click', e=>{ lastBuyProduct = b.dataset.product || b.getAttribute('data-product'); $('#chooserProductLabel').textContent = 'Product: '+lastBuyProduct; $('#chooserModal').style.display='flex'; }));
+$('#chooserCancel') && $('#chooserCancel').addEventListener('click', ()=> $('#chooserModal').style.display='none');
+$('#msgA').addEventListener('click', ()=> { const admin=ADMINS[0]; const msg=`Hey ${admin.label}, I want ${lastBuyProduct}`; window.open(`https://wa.me/${admin.phone}?text=${encodeURIComponent(msg)}`); $('#chooserModal').style.display='none'; });
+$('#msgB').addEventListener('click', ()=> { const admin=ADMINS[1]; const msg=`Hey ${admin.label}, I want ${lastBuyProduct}`; window.open(`https://wa.me/${admin.phone}?text=${encodeURIComponent(msg)}`); $('#chooserModal').style.display='none'; });
+
+/* Open Cart modal */
+$('#openCart') && $('#openCart').addEventListener('click', ()=> { $('#cartModal').style.display='flex'; renderCartModal(); });
+
+/* cart modal controls */
+$('#closeCart') && $('#closeCart').addEventListener('click', ()=> $('#cartModal').style.display='none');
+$('#cartCheckout') && $('#cartCheckout').addEventListener('click', ()=> {
+  if(!CART.length) return alert('Cart is empty'); $('#cartModal').style.display='none'; $('#buyerModal').style.display='flex';
+});
+$('#downloadInvoice') && $('#downloadInvoice').addEventListener('click', ()=> { if(!CART.length) return alert('Cart is empty'); genInvoice({name:'Customer',phone:'--'}); });
+
+/* Buyer modal */
+$('#buyerCancel') && $('#buyerCancel').addEventListener('click', ()=> $('#buyerModal').style.display='none');
+$('#buyerProceed') && $('#buyerProceed').addEventListener('click', async ()=>{
+  const name = ($('#buyerName').value||'').trim(), phone = ($('#buyerPhone').value||'').trim();
+  if(!name||!phone) return alert('Enter buyer name & WhatsApp');
+  $('#buyerModal').style.display='none';
+  const res = await genInvoice({name,phone});
+  if(res.ok){
+    let msg = 'Order from AKA SHOP:%0A';
+    CART.forEach(p=> msg += `• ${p.name} x${p.qty||1} = ₹${p.price*(p.qty||1)}%0A`);
+    msg += `%0ATotal: ₹${calcTotal()}%0AName: ${encodeURIComponent(name)}%0APhone: ${encodeURIComponent(phone)}`;
+    setTimeout(()=> window.open(`https://wa.me/${ADMINS[0].phone}?text=${msg}`), 600);
+    CART=[]; save(LS_CART,CART); renderMiniCart();
+    alert('Invoice created and WhatsApp opened to admin.');
+  } else alert('Invoice failed');
+});
+
+/* genInvoice using jsPDF */
+async function svgToPng(svg,w=80,h=80){ return new Promise((res,rej)=>{ const img=new Image(); const blob=new Blob([svg],{type:'image/svg+xml'}); const url=URL.createObjectURL(blob); img.onload=()=>{ try{ const c=document.createElement('canvas'); c.width=w; c.height=h; const ctx=c.getContext('2d'); ctx.drawImage(img,0,0,w,h); URL.revokeObjectURL(url); res(c.toDataURL('image/png')); }catch(e){ URL.revokeObjectURL(url); rej(e);} }; img.onerror=()=>{ URL.revokeObjectURL(url); rej(new Error('SVG error')); }; img.src = url; }); }
+function prodSvg(name){ const initials = name.split(' ').map(s=>s[0]).slice(0,2).join('').toUpperCase(); return `<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><rect width='100%' height='100%' fill='#111' rx='12'/><text x='50%' y='60%' font-size='36' dominant-baseline='middle' text-anchor='middle' fill='${'#f7d66d'}' font-family='Inter'>${initials}</text></svg>`; }
+async function genInvoice(buyer){
   try{
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF({unit:'pt',format:'a4'});
-    doc.setFontSize(18); doc.setTextColor(34,24,6); doc.text('AKA SHOP — Invoice',40,50);
-    doc.setFontSize(11); doc.setTextColor(120,120,120); doc.text('Contact: +91 7980590451',40,68);
-    doc.setFontSize(11); doc.text('Buyer: '+buyer.name,350,50); doc.text('Phone: '+buyer.phone,350,68);
-    const invId = 'AKA' + Date.now().toString().slice(-7);
-    doc.text('Invoice ID: '+invId,350,86);
-    doc.text('Date: '+(new Date()).toLocaleString(),40,86);
-
-    // images for items
-    const uniqueNames = [...new Set(CART.map(p=>p.name))];
-    const imgMap = {};
-    for(const name of uniqueNames){
-      const svg = productSvg(name);
-      try{ imgMap[name] = await svgToPngDataUrl(svg,80,80); }catch(e){ imgMap[name]=null; }
+    doc.setFontSize(18); doc.text('AKA SHOP — Invoice',40,50);
+    doc.setFontSize(11); doc.text('Contact: +91 7980590451',40,68); doc.text('Buyer: '+buyer.name,350,50); doc.text('Phone: '+buyer.phone,350,68);
+    let y=120; doc.setFontSize(12); doc.text('No',40,y); doc.text('Item',80,y); doc.text('Qty',350,y); doc.text('Rate',400,y); doc.text('Amount',480,y); y+=18;
+    const unique = [...CART];
+    for(let i=0;i<unique.length;i++){
+      const p = unique[i]; const amount = p.price*(p.qty||1);
+      try{ const png = await svgToPng(prodSvg(p.name),60,60); doc.addImage(png,'PNG',40,y,40,40); }catch(e){}
+      doc.text(String(i+1),88,y+18); doc.text(p.name, 110, y+18); doc.text(String(p.qty||1),360,y+18); doc.text('₹'+p.price,410,y+18); doc.text('₹'+amount,480,y+18);
+      y+=48; if(y>720){ doc.addPage(); y=60; }
     }
-
-    // table
-    let y = 120;
-    doc.setFontSize(12);
-    doc.text('No',40,y); doc.text('Item',80,y); doc.text('Qty',350,y); doc.text('Rate',400,y); doc.text('Amount',480,y);
-    y += 14;
-    let total = 0;
-    for(let i=0;i<CART.length;i++){
-      const p = CART[i];
-      const amount = p.price * p.qty; total += amount;
-      if(imgMap[p.name]){ try{ doc.addImage(imgMap[p.name],'PNG',40,y,40,40); }catch(e){} }
-      const textX = imgMap[p.name] ? 88 : 80;
-      doc.text(String(i+1), textX-40, y+18);
-      doc.text(p.name, textX, y+18);
-      doc.text(String(p.qty), 360, y+18);
-      doc.text('₹'+p.price, 410, y+18);
-      doc.text('₹'+amount, 480, y+18);
-      y += 48;
-      if(y > 720){ doc.addPage(); y = 60; }
-    }
-
-    if(cartCoupon){ doc.text('Coupon (AKA25VIP) applied: -₹25',40,y); y+=18; total -= 25; }
-
-    y += 6;
-    doc.setFontSize(14); doc.text('Total: ₹'+Math.max(0,total),40,y+6);
-    doc.setFontSize(10); doc.setTextColor(140,140,140);
-    doc.text('Thank you for shopping with AKA SHOP — Instant Delivery',40,780);
-
-    const fname = 'AKASHOP_invoice_' + Date.now() + '.pdf';
-    doc.save(fname);
-    return { ok: true, invId };
-  }catch(err){ console.error('Invoice err', err); return { ok:false }; }
+    const total = calcTotal();
+    doc.setFontSize(14); doc.text('Total: ₹'+total,40,y+18);
+    const fname = 'AKA_Invoice_'+Date.now()+'.pdf'; doc.save(fname);
+    return { ok:true };
+  }catch(err){ console.error(err); return { ok:false }; }
 }
 
-/* Checkout flow */
-$('#checkoutBtn').addEventListener('click', ()=>{
-  if(!CART.length){ alert('Cart is empty'); return; }
-  $('#buyerModal').style.display = 'flex';
+/* -------- Kills coupon -------- */
+let killCoupon=false;
+$('#applyKill') && $('#applyKill').addEventListener('click', ()=>{
+  const v = ($('#killCoupon').value||'').trim().toUpperCase();
+  if(v===SECRET_COUPON){ killCoupon=true; alert('✅ ₹25 off applied on Kills'); updateKillsUI(); } else { killCoupon=false; alert('Invalid code'); updateKillsUI(); }
 });
-$('#buyerCancel').addEventListener('click', ()=> $('#buyerModal').style.display='none');
+function updateKillsUI(){ const base = Number($('[data-product-key="1B Kills"]').dataset.inr||DEFAULT.products['1B Kills'].price); const cur = killCoupon?Math.max(0, base - SECRET_COUPON_OFF):base; $('[data-product-key="1B Kills"]').dataset.inr = cur; updateCurrencyUI(); }
 
-$('#buyerProceed').addEventListener('click', async ()=>{
-  const name = ($('#buyerName').value||'').trim(); const phone = ($('#buyerPhone').value||'').trim();
-  if(!name || !phone){ alert('Please enter name and WhatsApp number'); return; }
-  $('#buyerModal').style.display='none';
-  const res = await generateInvoicePDF({name, phone});
-  if(res.ok){
-    playOrder();
-    for(let i=0;i<36;i++){ const c=document.createElement('div'); c.textContent='🎉'; c.style.position='fixed'; c.style.left=(Math.random()*100)+'%'; c.style.top='-20px'; c.style.fontSize=(12+Math.random()*18)+'px'; c.style.zIndex=9999; c.style.animation='drop 2s linear'; document.body.appendChild(c); setTimeout(()=>c.remove(),2100); }
-    let msg='Order from AKA SHOP:%0A';
-    CART.forEach(p=> msg += `• ${p.name} x${p.qty} = ₹${p.price*p.qty}%0A`);
-    if(cartCoupon) msg += `%0ACoupon: AKA25VIP - ₹25 off%0A`;
-    msg += `%0ATotal: ₹${calcTotalINR()}%0AName: ${encodeURIComponent(name)}%0APhone: ${encodeURIComponent(phone)}`;
-    // default checkout opens AMAN's WA (if you want chooser here, let me know)
-    setTimeout(()=> window.open('https://wa.me/917980590451?text='+msg), 700);
-  }else alert('Invoice generation failed. Try again.');
-});
-
-$('#downloadInvoice').addEventListener('click', async ()=>{
-  if(!CART.length){ alert('Cart is empty'); return; }
-  const name = prompt('Enter buyer name (for invoice):') || 'Customer';
-  await generateInvoicePDF({name, phone:'--'});
-});
-
-/* ================ Recent orders popup (simulate) ================ */
-const NAMES=["Rohit","Aman","Krish","Aditya","Sahil","Yash","Arjun","Kabir","Ali","Ankit","Lisa","Emma","Sofia","Meera","Anaya","Carlos","Aisha"];
-const CITIES=["Delhi","Mumbai","Pune","Hyd","Jaipur","Indore","Chennai","Patna","Nagpur","Lucknow","London","Dubai","NYC"];
-function showRecent(){ const msg = `✅ ${NAMES[Math.random()*NAMES.length|0]} from ${CITIES[Math.random()*CITIES.length|0]} bought ${['1B Kills','Gold Pass','Silver Pass','Both Pass','1M Diamond','7D Diamond','Bot Monthly'][Math.random()*7|0]}`; const el=document.createElement('div'); el.className='review'; el.style.position='fixed'; el.style.bottom='24px'; el.style.left='24px'; el.style.zIndex=9003; el.innerHTML=`<div style="color:var(--gold1);font-weight:900">${msg}</div>`; document.body.appendChild(el); setTimeout(()=>el.remove(),4200); }
-setTimeout(showRecent,8000); setInterval(showRecent,40000+Math.random()*50000);
-
-/* ================ Admin System (login + state) ================ */
-/* Admin credentials */
-const ADMIN_USERNAME = 'AKASHOPADMIN';
-const ADMIN_PASSWORD = 'AKASHOP2021';
-const LS_ADMIN_KEY = 'AKASHOP_ADMIN_LOGGED';
-const LS_SITE_STATE = 'AKASHOP_STATE_FINAL_V1';
-
-/* Default product state (ensure keys match data-product-key values) */
-const DEFAULT_STATE = {
-  products: {
-    '1B Kills': { price: 1050, banner: false, bannerText: '' },
-    'Gold Pass': { price: 270, banner: false, bannerText: '' },
-    'Silver Pass': { price: 120, banner: false, bannerText: '' },
-    'Both Pass': { price: 380, banner: false, bannerText: '' },
-    '1M Diamond': { price: 1820, banner: false, bannerText: '' },
-    '7D Diamond': { price: 190, banner: false, bannerText: '' },
-    '44444B RSS': { price: 130, banner: false, bannerText: '' },
-    '44442B RSS': { price: 120, banner: false, bannerText: '' },
-    '44440B RSS': { price: 110, banner: false, bannerText: '' },
-    '22222B RSS': { price: 110, banner: false, bannerText: '' },
-    '22220B RSS': { price: 90, banner: false, bannerText: '' },
-    '33333B RSS': { price: 120, banner: false, bannerText: '' },
-    '22221B RSS': { price: 100, banner: false, bannerText: '' },
-    '11111B RSS': { price: 80, banner: false, bannerText: '' },
-    '11110B RSS': { price: 80, banner: false, bannerText: '' },
-    '4B Food': { price: 80, banner: false, bannerText: '' }
-  }
-};
-
-function loadSiteState(){
-  try{
-    const raw = localStorage.getItem(LS_SITE_STATE);
-    if(!raw){ localStorage.setItem(LS_SITE_STATE, JSON.stringify(DEFAULT_STATE)); return JSON.parse(JSON.stringify(DEFAULT_STATE)); }
-    const parsed = JSON.parse(raw);
-    // ensure all keys exist
-    for(const k in DEFAULT_STATE.products) if(!parsed.products[k]) parsed.products[k] = JSON.parse(JSON.stringify(DEFAULT_STATE.products[k]));
-    return parsed;
-  }catch(e){
-    return JSON.parse(JSON.stringify(DEFAULT_STATE));
+/* -------- Reviews carousel & user reviews -------- */
+const FAKE = [
+  {name:'Priya',country:'India',text:'Fast delivery — activated in minutes!'},
+  {name:'Lisa',country:'USA',text:'Great support!'},
+  {name:'Ananya',country:'India',text:'Trusted seller.'},
+  {name:'Sofia',country:'Spain',text:'Instant activation.'},
+  {name:'Vikas',country:'India',text:'Worked as promised.'},
+  {name:'Emma',country:'UK',text:'Excellent.'},
+  {name:'Carlos',country:'Brazil',text:'Recommended.'}
+];
+let revIndex=0;
+function renderReviews(){
+  const wrap = $('#reviewCarousel'); wrap.innerHTML = '';
+  const list = FAKE.concat(REVIEWS);
+  for(let i=0;i<3;i++){
+    const r = list[(revIndex+i)%list.length];
+    const div = document.createElement('div'); div.className='rev-slide';
+    div.innerHTML = `<div style="font-weight:900;color:var(--gold1)">★★★★★</div><div style="margin-top:6px;font-weight:800">${r.text}</div><div class="muted">— ${r.name}, ${r.country||'User'}</div>`;
+    wrap.appendChild(div);
   }
 }
-function saveSiteState(state){ localStorage.setItem(LS_SITE_STATE, JSON.stringify(state)); }
+renderReviews(); setInterval(()=>{ revIndex=(revIndex+1)% (FAKE.concat(REVIEWS).length || 1); renderReviews(); },4500);
+$('#submitReview') && $('#submitReview').addEventListener('click', ()=>{ const rating = $('#rating').value; const text = ($('#reviewText').value||'').trim(); if(!text) return alert('Write review'); REVIEWS.unshift({name:'User',country:'',text}); save(LS_REV,REVIEWS); $('#reviewText').value=''; alert('Thanks!'); renderReviews(); });
 
-/* apply prices & banners from state */
-function applyStateToPage(){
-  const state = loadSiteState();
-  // update prices
-  Object.keys(state.products).forEach(prodKey=>{
-    const p = state.products[prodKey];
-    // update any .price elements with matching data-product-key or container text
-    $$('[data-product-key]').forEach(span=>{
-      if(span.dataset.productKey === prodKey){ span.dataset.inr = p.price; }
-    });
-    // update add buttons data-price
-    $$('[data-name]').forEach(btn=>{
-      if(btn.dataset.name === prodKey){ btn.dataset.price = p.price; }
-    });
-    // update buy buttons data-product? (not needed)
-    // update any card that contains product name to show banner
-    $$('[data-card-for]').forEach(card=>{
-      if(card.getAttribute('data-card-for') === prodKey){
-        // remove existing banner if any
-        const existing = card.querySelector('.banner-pill');
-        if(p.banner && p.bannerText){
-          if(!existing){
-            const pill = document.createElement('div'); pill.className='banner-pill'; pill.textContent = p.bannerText;
-            card.prepend(pill);
-          } else existing.textContent = p.bannerText;
-        } else if(existing) existing.remove();
-      }
-    });
-    // special: kills card uses id 'card-kills'
-    if(prodKey === '1B Kills'){
-      const killsSpan = $('#card-kills .price');
-      if(killsSpan) killsSpan.dataset.inr = p.price;
-    }
-  });
-  updateCurrencyUI();
-}
+/* -------- Order tracking -------- */
+$('#trackOrderBtn') && $('#trackOrderBtn').addEventListener('click', ()=>{ const id = ($('#orderId').value||'').trim(); if(!id) return alert('Enter Order ID'); const s = ['Processing','Preparing','Out for Delivery','Delivered','Pending']; $('#orderResult').style.display='block'; $('#orderResult').textContent = s[Math.floor(Math.random()*s.length)]; });
 
-/* Admin UI build */
-function buildAdminLists(){
-  const state = loadSiteState();
-  const priceList = $('#adminPriceList'); priceList.innerHTML = '';
-  Object.keys(state.products).forEach(key=>{
-    const prod = state.products[key];
-    const el = document.createElement('div'); el.className = 'admin-field';
-    el.innerHTML = `<div style="font-weight:800">${key}</div>
-      <div style="display:flex;gap:8px;margin-top:8px;align-items:center">
-        <input class="admin-input admin-edit-price" data-prod="${key}" value="${prod.price}">
-        <input class="admin-input admin-edit-bannerText" data-prod="${key}" placeholder="Banner text (optional)" value="${prod.bannerText}">
-        <label style="display:flex;align-items:center;gap:6px"><input type="checkbox" class="admin-banner-toggle" data-prod="${key}" ${prod.banner ? 'checked' : ''}> banner</label>
-      </div>`;
-    priceList.appendChild(el);
-  });
-
-  const bannerList = $('#adminBannerList'); bannerList.innerHTML = '';
-  Object.keys(state.products).forEach(k=>{
-    const p = state.products[k];
-    const node = document.createElement('div'); node.className='admin-field';
-    node.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center"><div style="font-weight:800">${k}</div><label style="display:flex;align-items:center;gap:8px"><input type="checkbox" class="admin-banner-toggle" data-prod="${k}" ${p.banner ? 'checked' : ''}> Show</label></div>
-      <div style="margin-top:6px"><input class="admin-input admin-edit-bannerText" data-prod="${k}" placeholder="Banner text" value="${p.bannerText}"></div>`;
-    bannerList.appendChild(node);
-  });
-}
-
-/* Admin modal & login handlers */
+/* -------- Admin Login & Panel -------- */
 $('#adminLoginBtn').addEventListener('click', ()=> $('#adminLoginModal').style.display='flex');
 $('#adminLoginCancel').addEventListener('click', ()=> $('#adminLoginModal').style.display='none');
-
 $('#adminLoginSubmit').addEventListener('click', ()=>{
-  const u = $('#adminUser').value.trim();
-  const p = $('#adminPass').value.trim();
-  if(u === ADMIN_USERNAME && p === ADMIN_PASSWORD){
-    localStorage.setItem(LS_ADMIN_KEY, 'true');
-    $('#adminLoginModal').style.display = 'none';
-    $('#adminPanel').style.display = 'block';
-    $('#adminLoggedAs').textContent = ADMIN_USERNAME;
-    buildAdminLists();
-  } else {
-    $('#adminLoginMsg').style.display = 'block';
-    $('#adminLoginMsg').textContent = 'Invalid credentials!';
-    setTimeout(()=> $('#adminLoginMsg').style.display='none', 3000);
-  }
+  const u = ($('#adminUser').value||'').trim(), p = ($('#adminPass').value||'').trim();
+  if(u===ADMIN_USER && p===ADMIN_PASS){ localStorage.setItem(LS_ADMIN,'true'); ADMIN_LOGGED=true; $('#adminLoginModal').style.display='none'; $('#adminPanel').style.display='block'; buildPriceList(); alert('Admin logged in'); } else { $('#adminLoginMsg').style.display='block'; $('#adminLoginMsg').textContent='Invalid credentials'; setTimeout(()=> $('#adminLoginMsg').style.display='none',2000); }
 });
 
-$('#adminLogout').addEventListener('click', ()=>{ localStorage.removeItem(LS_ADMIN_KEY); location.reload(); });
+/* Admin panel open/close */
+$('#adminPanelToggle').addEventListener('click', ()=> { if(ADMIN_LOGGED){ $('#adminPanel').style.display = ($('#adminPanel').style.display==='block')?'none':'block'; buildPriceList(); } else { alert('Please login as admin'); $('#adminLoginModal').style.display='flex'; } });
+if(localStorage.getItem(LS_ADMIN) === 'true'){ ADMIN_LOGGED=true; $('#adminPanel').style.display='block'; buildPriceList(); }
 
-$('#adminSave').addEventListener('click', ()=>{
-  const state = loadSiteState();
-  // price inputs
-  $$('.admin-edit-price').forEach(inp=>{
-    const k = inp.dataset.prod; const v = Number(inp.value) || state.products[k].price;
-    state.products[k].price = v;
+/* build price list UI */
+function buildPriceList(){
+  const box = $('#adminPriceList'); box.innerHTML=''; Object.keys(STATE.products).forEach(k=>{
+    const p = STATE.products[k];
+    const div = document.createElement('div'); div.className='admin-field';
+    div.innerHTML = `<div style="font-weight:800">${k}</div>
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <input class="admin-input admin-price" data-prod="${k}" value="${p.price}">
+        <input class="admin-input admin-stock" data-prod="${k}" placeholder="stock (optional)">
+      </div>`;
+    box.appendChild(div);
   });
-  // banner text
-  $$('.admin-edit-bannerText').forEach(inp=>{
-    const k = inp.dataset.prod; state.products[k].bannerText = inp.value || '';
-  });
-  // toggles
-  $$('.admin-banner-toggle').forEach(chk=>{
-    const k = chk.dataset.prod; state.products[k].banner = !!chk.checked;
-  });
-  saveSiteState(state);
-  applyStateToPage();
-  buildAdminLists();
-  alert('Saved — changes applied locally.');
-});
-
-$('#adminReset').addEventListener('click', ()=>{
-  if(!confirm('Reset all prices and banners to defaults?')) return;
-  localStorage.removeItem(LS_SITE_STATE);
-  applyStateToPage();
-  buildAdminLists();
-  alert('Reset complete.');
-});
-
-/* show admin panel if previously logged in */
-if(localStorage.getItem(LS_ADMIN_KEY) === 'true'){
-  $('#adminPanel').style.display = 'block';
-  buildAdminLists();
 }
 
-/* initial apply */
-applyStateToPage();
+/* admin save/reset */
+$('#adminSave').addEventListener('click', ()=> {
+  $$('.admin-price').forEach(inp=>{ const k=inp.dataset.prod; STATE.products[k].price = Number(inp.value) || STATE.products[k].price; });
+  save(LS_STATE, STATE); applyPrices(); buildPriceList(); alert('Saved');
+});
+$('#adminReset').addEventListener('click', ()=>{ if(!confirm('Reset to defaults?')) return; STATE = Object.assign({}, DEFAULT); save(LS_STATE,STATE); applyPrices(); buildPriceList(); alert('Reset done'); });
 
-/* ================ INIT ================ */
-(function init(){ renderCart(); countCart(); updateCurrencyUI(); })();
+/* banner on/off via panel */
+$('#adminBannerOn').addEventListener('click', ()=> {
+  const text = ($('#adminBannerText').value||'').trim(); const expiry = ($('#adminBannerExpiry').value||'').trim();
+  if(!text||!expiry) return alert('Enter banner text and expiry ISO');
+  STATE.banner.enabled = true; STATE.banner.text = text; STATE.banner.expiryISO = expiry; save(LS_STATE,STATE); updateBanner(); alert('Banner ON');
+});
+$('#adminBannerOff').addEventListener('click', ()=> { STATE.banner.enabled=false; STATE.banner.text=''; STATE.banner.expiryISO=''; save(LS_STATE,STATE); updateBanner(); alert('Banner OFF'); });
 
+$('#bannerOnBtn') && $('#bannerOnBtn').addEventListener('click', ()=> { $('#adminBannerText').value = 'LIMITED KILLS SALE'; $('#adminBannerExpiry').value = new Date(Date.now()+3*24*3600*1000).toISOString().slice(0,19); $('#adminBannerOn').click(); });
+$('#bannerOffBtn') && $('#bannerOffBtn').addEventListener('click', ()=> $('#adminBannerOff').click());
+
+/* update banner display & countdown */
+let bannerInterval=null;
+function updateBanner(){
+  const b = $('#topBanner');
+  if(STATE.banner.enabled && STATE.banner.text && STATE.banner.expiryISO){
+    b.style.display='block'; $('#bannerText').textContent = STATE.banner.text;
+    if(bannerInterval) clearInterval(bannerInterval);
+    bannerInterval = setInterval(()=>{
+      const diff = new Date(STATE.banner.expiryISO) - new Date();
+      if(diff<=0){ STATE.banner.enabled=false; STATE.banner.text=''; STATE.banner.expiryISO=''; save(LS_STATE,STATE); updateBanner(); clearInterval(bannerInterval); return; }
+      const d = Math.floor(diff/(1000*60*60*24)), h = Math.floor((diff%(1000*60*60*24))/(1000*60*60)), m = Math.floor((diff%(1000*60*60))/(1000*60)), s = Math.floor((diff%(1000*60))/1000);
+      $('#bannerCountdown').textContent = `${String(d).padStart(2,'0')}d ${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    },1000);
+  } else { b.style.display='none'; if(bannerInterval) clearInterval(bannerInterval); $('#bannerCountdown').textContent='00d 00:00:00'; }
+}
+updateBanner();
+
+/* small helper for chat */
+$('#chatFab').addEventListener('click', ()=> {
+  const choose = confirm('Chat via WhatsApp with ADMIN (AMAN)? Press Cancel for BAD BOY');
+  const admin = choose ? ADMINS[0] : ADMINS[1];
+  window.open(`https://wa.me/${admin.phone}?text=${encodeURIComponent('Hey '+admin.label+', I need help with an order')}`);
+});
+
+/* cart floating */
+$('#cartFab').addEventListener('click', ()=> { $('#cartModal').style.display='flex'; renderCartModal(); });
+renderMiniCart();
+
+/* initial attach events for add/buy were done earlier by delegation - ensure price apply for kills */
+updateKillsUI();
+
+/* small: remove modal when clicking outside */
+$$('.modal-back').forEach(mb=> mb.addEventListener('click', e=> { if(e.target===mb) mb.style.display='none'; }));
+
+/* expose debug */
+window.AKASHOP = { STATE, CART, REVIEWS, saveState: ()=> save(LS_STATE,STATE) };
+
+}); // DOMContentLoaded
 </script>
 </body>
 </html>
