@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>AKA SHOP — Pro MAX v6</title>
+<title>AKA SHOP — Pro MAX</title>
 
 <style>
 :root{
@@ -191,10 +191,10 @@ aside{max-width:360px;margin:16px auto 0;}
 <div id="tgModal" class="modal-back">
   <div class="modal">
     <h2 style="color:var(--gold);margin-bottom:10px;">Join Telegram Group</h2>
-    <p style="color:#ccc;">Join the group → enter your Telegram username → Get Verified → Buy buttons unlock.</p>
+    <p style="color:#ccc;">Join the group → enter your Telegram username → Badge show hoga (Buy lock nahi hai).</p>
     <input id="tgUsername" class="input" placeholder="@username" style="margin-top:10px">
     <button id="tgOpenLink" class="btn" style="margin-top:10px;width:100%;">Open Telegram</button>
-    <button id="tgIJoined" class="btn" style="margin-top:10px;width:100%;">I Joined (Verify)</button>
+    <button id="tgIJoined" class="btn" style="margin-top:10px;width:100%;">I Joined (Save)</button>
     <button id="tgClose" class="btn ghost" style="margin-top:8px;width:100%;">Cancel</button>
   </div>
 </div>
@@ -233,7 +233,7 @@ aside{max-width:360px;margin:16px auto 0;}
     <div class="small-muted" style="margin-top:6px;">Kingdom Till 1700 — Last Available</div>
   </section>
 
-  <!-- ACCOUNTS -->
+  <!-- ACCOUNTS (NO BUY BUTTONS) -->
   <section class="card" id="card-accounts">
     <h2>🧾 Account Sell</h2>
     <div id="accountsContainer" class="grid"></div>
@@ -290,45 +290,46 @@ aside{max-width:360px;margin:16px auto 0;}
 const ADMIN_ID   = "AKASHOPADMIN";
 const ADMIN_PASS = "AKASHOP2021";
 
-const STORE      = "aka_shop_data_v6";
+const STORE      = "aka_shop_data_v8";
 const TG_STORE   = "aka_tg_verified";
 
 let state = JSON.parse(localStorage.getItem(STORE) || "null");
 if (!state) state = {};
 
+// ---------- INITIAL DATA ----------
 if (!state.products) {
   state.products = {
     kills: [
-      { name:"1B Kills", price:1050, stock:12 }
+      { name:"1B Kills", price:1050, stock:12, sold:0 }
     ],
     gems: [
-      { name:"Gold Pass (599→270)",   price:270, stock:12 },
-      { name:"Silver Pass (299→120)", price:120, stock:12 },
-      { name:"Both Pass (400→380)",   price:380, stock:12 }
+      { name:"Gold Pass (599→270)",   price:270, stock:12, sold:0 },
+      { name:"Silver Pass (299→120)", price:120, stock:12, sold:0 },
+      { name:"Both Pass (400→380)",   price:380, stock:12, sold:0 }
     ],
     diamond: [
-      { name:"1 Month Diamond Pass (1880→1820)", price:1820, stock:12 },
-      { name:"7 Day Diamond Pass", price:190, stock:12 }
+      { name:"1 Month Diamond Pass (1880→1820)", price:1820, stock:12, sold:0 },
+      { name:"7 Day Diamond Pass", price:190, stock:12, sold:0 }
     ],
     rss: [
-      { name:"44444B RSS", price:130, stock:12 },
-      { name:"44442B RSS", price:120, stock:12 },
-      { name:"44440B RSS", price:110, stock:12 },
-      { name:"33333B RSS", price:120, stock:12 },
-      { name:"22222B RSS", price:110, stock:12 },
-      { name:"22221B RSS", price:100, stock:12 },
-      { name:"22220B RSS", price:90,  stock:12 },
-      { name:"11111B RSS", price:80,  stock:12 },
-      { name:"11110B RSS", price:80,  stock:12 },
-      { name:"4B Food Only", price:80, stock:12 }
+      { name:"44444B RSS", price:130, stock:12, sold:0 },
+      { name:"44442B RSS", price:120, stock:12, sold:0 },
+      { name:"44440B RSS", price:110, stock:12, sold:0 },
+      { name:"33333B RSS", price:120, stock:12, sold:0 },
+      { name:"22222B RSS", price:110, stock:12, sold:0 },
+      { name:"22221B RSS", price:100, stock:12, sold:0 },
+      { name:"22220B RSS", price:90,  stock:12, sold:0 },
+      { name:"11111B RSS", price:80,  stock:12, sold:0 },
+      { name:"11110B RSS", price:80,  stock:12, sold:0 },
+      { name:"4B Food Only", price:80, stock:12, sold:0 }
     ],
     accounts: [
-      { name:"Mini Account Sell",      price:300,  stock:12 },
-      { name:"Filler Account Sell",    price:450,  stock:12 },
-      { name:"Semi Lead Account Sell", price:900,  stock:12 },
-      { name:"Lead Account Sell",      price:1500, stock:12 },
-      { name:"Titan Account Sell",     price:3500, stock:12 },
-      { name:"Emperor Account Sell",   price:8000, stock:12 }
+      { name:"Mini Account Sell",      price:300,  stock:12, sold:0 },
+      { name:"Filler Account Sell",    price:450,  stock:12, sold:0 },
+      { name:"Semi Lead Account Sell", price:900,  stock:12, sold:0 },
+      { name:"Lead Account Sell",      price:1500, stock:12, sold:0 },
+      { name:"Titan Account Sell",     price:3500, stock:12, sold:0 },
+      { name:"Emperor Account Sell",   price:8000, stock:12, sold:0 }
     ]
   };
 }
@@ -337,14 +338,16 @@ if (!state.reviews)       state.reviews       = [];
 if (!state.announcements) state.announcements = [];
 if (!state.flags)         state.flags         = { maintenance:false, fakePopup:true, fakeReviews:true };
 if (typeof state.autoStock !== "boolean") state.autoStock = true;
+
 if (!state.coupon) {
   state.coupon = {
     enabled:true,
     code:"AKA25VIP",
     discount:25,
-    categories:["kills"]   // category keys
+    categories:["kills"]   // coupon default only KILLS
   };
 }
+
 if (!state.settings) {
   state.settings = {
     amanPhone:   "7980590451",
@@ -352,6 +355,7 @@ if (!state.settings) {
     telegram:    "https://t.me/+YHw-d8Pp5A0xNzRl"
   };
 }
+
 if (!state.visibility) {
   state.visibility = {
     kills:true,
@@ -362,27 +366,67 @@ if (!state.visibility) {
   };
 }
 
+// ensure sold field
+Object.values(state.products).forEach(list=>{
+  list.forEach(p=>{
+    if (typeof p.sold !== "number") p.sold = 0;
+  });
+});
+
 saveState();
 
 function saveState(){
   localStorage.setItem(STORE, JSON.stringify(state));
 }
 
+/* map built-in categories */
+const baseCategoryLayout = {
+  kills:   { card:"card-kills",    container:"killsContainer",    label:"🔫 Kills" },
+  gems:    { card:"card-gems",     container:"gemsContainer",     label:"💎 Gems Monthly Pack" },
+  diamond: { card:"card-diamond",  container:"diamondContainer",  label:"💠 Diamond Pass" },
+  rss:     { card:"card-rss",      container:"rssContainer",      label:"📦 Recourse (RSS)" },
+  accounts:{ card:"card-accounts", container:"accountsContainer", label:"🧾 Account Sell" }
+};
+
 /* ================= RENDER PRODUCTS ================= */
 
 function renderProducts(){
-  renderCategory("killsContainer","card-kills",state.products.kills,"kills");
-  renderCategory("gemsContainer","card-gems",state.products.gems,"gems");
-  renderCategory("diamondContainer","card-diamond",state.products.diamond,"diamond");
-  renderCategory("rssContainer","card-rss",state.products.rss,"rss");
-  renderCategory("accountsContainer","card-accounts",state.products.accounts,"accounts");
-  applyTelegramLock();
+  const main = document.querySelector("main");
+  Object.keys(state.products).forEach(catKey=>{
+    let layout = baseCategoryLayout[catKey];
+    let containerId;
+
+    if (layout) {
+      containerId = layout.container;
+    } else {
+      // new category card
+      const secId = "card-" + catKey;
+      let sec = document.getElementById(secId);
+      if (!sec) {
+        sec = document.createElement("section");
+        sec.className = "card";
+        sec.id = secId;
+        const pretty = catKey.replace(/_/g," ").replace(/\b\w/g,c=>c.toUpperCase());
+        sec.innerHTML = `<h2>${pretty}</h2><div id="${catKey}Container" class="grid"></div>`;
+        main.appendChild(sec);
+      }
+      containerId = catKey + "Container";
+    }
+
+    if (catKey === "accounts") {
+      renderAccounts(containerId, state.products[catKey]);
+    } else {
+      renderCategory(containerId, state.products[catKey], catKey);
+    }
+  });
+
+  applyTelegramBadge();
   applyCategoryVisibility();
 }
 
-function renderCategory(containerId, cardId, list, catKey){
+function renderCategory(containerId, list, catKey){
   const cont = document.getElementById(containerId);
-  if(!cont) return;
+  if (!cont) return;
   cont.innerHTML = "";
   list.forEach((p,i)=>{
     const el = document.createElement("div");
@@ -398,7 +442,23 @@ function renderCategory(containerId, cardId, list, catKey){
   });
 }
 
+function renderAccounts(containerId, list){
+  const cont = document.getElementById(containerId);
+  if (!cont) return;
+  cont.innerHTML = "";
+  list.forEach((p)=>{
+    const el = document.createElement("div");
+    el.className = "box";
+    el.innerHTML = `
+      <div>${p.name}</div>
+      <div class="small-muted">Contact admin for full details.</div>
+    `;
+    cont.appendChild(el);
+  });
+}
+
 /* ============== CATEGORY VISIBILITY ============== */
+
 function applyCategoryVisibility(){
   const map = {
     kills:"card-kills",
@@ -409,9 +469,7 @@ function applyCategoryVisibility(){
   };
   Object.keys(map).forEach(k=>{
     const sec = document.getElementById(map[k]);
-    if(sec){
-      sec.style.display = state.visibility[k] ? "block" : "none";
-    }
+    if (sec) sec.style.display = state.visibility[k] ? "block" : "none";
   });
 }
 
@@ -467,7 +525,7 @@ document.getElementById("checkoutBtn").onclick = ()=>{
     if(hasEligible){
       total = Math.max(0, subtotal - state.coupon.discount);
       couponApplied = true;
-      showToast(`Coupon ${state.coupon.code} applied: -₹${state.coupon.discount}`);
+      showToast(`Coupon applied: -₹${state.coupon.discount}`);
     } else {
       showToast("Coupon valid but no eligible items.");
     }
@@ -478,7 +536,7 @@ document.getElementById("checkoutBtn").onclick = ()=>{
   let msg = `New order from AKA SHOP:\n` +
             cart.map(x=>`- ${x.name} (₹${x.price})`).join("\n") +
             `\nSubtotal: ₹${subtotal}`;
-  if(couponApplied) msg += `\nCoupon: ${state.coupon.code} (-₹${state.coupon.discount})`;
+  if(couponApplied) msg += `\nCoupon: (hidden)`;
   msg += `\nTotal: ₹${total}`;
 
   window.open(`https://wa.me/91${phone}?text=${encodeURIComponent(msg)}`,"_blank");
@@ -555,29 +613,23 @@ function renderAnnouncements(){
   b.textContent = latest;
 }
 
-/* ============== TELEGRAM VERIFY ============== */
+/* ============== TELEGRAM: BADGE ONLY (NO LOCK) ============== */
 
-function applyTelegramLock(){
+function applyTelegramBadge(){
   const v = JSON.parse(localStorage.getItem(TG_STORE) || "null");
-  const locked = !v;
-  document.querySelectorAll(".buy-btn,.add-btn").forEach(btn=>{
-    if(locked){
-      btn.classList.add("disabled-btn");
-      btn.disabled = true;
-      btn.title = "Join Telegram to unlock";
-    } else {
-      btn.classList.remove("disabled-btn");
-      btn.disabled = false;
-      btn.title = "";
-    }
-  });
   const badge = document.getElementById("tgVerifiedBadge");
-  if(v){
+  if(v && badge){
     badge.style.display="inline-block";
     badge.textContent = `✔ Telegram Verified (${v.username})`;
-  } else {
+  } else if(badge){
     badge.style.display="none";
   }
+  // buttons always active
+  document.querySelectorAll(".buy-btn,.add-btn").forEach(btn=>{
+    btn.classList.remove("disabled-btn");
+    btn.disabled = false;
+    btn.title = "";
+  });
 }
 
 function openTgModal(){ document.getElementById("tgModal").style.display="flex"; }
@@ -595,8 +647,8 @@ document.getElementById("tgIJoined").onclick = ()=>{
   if(!u) return alert("Enter Telegram username (@...)");
   localStorage.setItem(TG_STORE, JSON.stringify({username:u}));
   closeTgModal();
-  showToast("Telegram verified");
-  applyTelegramLock();
+  showToast("Telegram saved");
+  applyTelegramBadge();
 };
 
 document.getElementById("tgClose").onclick = closeTgModal;
@@ -606,9 +658,9 @@ document.getElementById("tgClose").onclick = closeTgModal;
 function applyMaintenance(){
   const overlay = document.getElementById("maintenanceOverlay");
   if(state.flags.maintenance){
-    overlay.style.display="flex";
+    overlay.style.display="flex"; 
   } else {
-    overlay.style.display="none";
+    overlay.style..display="none";
   }
 }
 
@@ -673,11 +725,12 @@ function openAdminPanel(){
 
   inner.innerHTML = `
     <h2 style="color:var(--gold);margin-bottom:6px;">Admin Control Panel</h2>
-    <div class="small-muted" style="margin-bottom:8px;">Manage items, stock, offers, announcements & settings.</div>
+    <div class="small-muted" style="margin-bottom:8px;">Manage items, categories, stock, offers, announcements & settings.</div>
 
     <hr style="opacity:.3;margin:6px 0;">
 
-    <h3 style="font-size:14px;color:var(--gold);margin-bottom:4px;">➕ Add New Item</h3>
+    <h3 style="font-size:14px;color:var(--gold);margin-bottom:4px;">➕ Add New Category / Item</h3>
+    <div class="small-muted" style="margin-bottom:4px;">Choose existing category OR type new category name.</div>
     <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px;">
       <select id="admCat" class="input" style="flex:1;min-width:120px;">
         <option value="kills">Kills</option>
@@ -686,6 +739,7 @@ function openAdminPanel(){
         <option value="rss">RSS</option>
         <option value="accounts">Accounts</option>
       </select>
+      <input id="admNewCat" class="input" placeholder="New category (optional)" style="flex:1;min-width:120px;">
       <input id="admName" class="input" placeholder="Item name" style="flex:2;min-width:150px;">
       <input id="admPrice" type="number" class="input" placeholder="Price" style="flex:1;min-width:80px;">
       <input id="admStock" type="number" class="input" placeholder="Stock" style="flex:1;min-width:80px;">
@@ -694,8 +748,8 @@ function openAdminPanel(){
 
     <hr style="opacity:.3;margin:6px 0;">
 
-    <h3 style="font-size:14px;color:var(--gold);margin-bottom:4px;">📦 Edit Products (Price / Stock)</h3>
-    <div id="admProductList" style="max-height:180px;overflow:auto;border:1px solid rgba(255,255,255,.15);border-radius:8px;padding:4px;margin-bottom:8px;"></div>
+    <h3 style="font-size:14px;color:var(--gold);margin-bottom:4px;">📦 Edit Products (Price / Stock / Sold)</h3>
+    <div id="admProductList" style="max-height:190px;overflow:auto;border:1px solid rgba(255,255,255,.15);border-radius:8px;padding:4px;margin-bottom:8px;"></div>
 
     <hr style="opacity:.3;margin:6px 0;">
 
@@ -720,7 +774,7 @@ function openAdminPanel(){
     </div>
 
     <h3 style="font-size:14px;color:var(--gold);margin-bottom:4px;">🏷 Coupon Manager</h3>
-    <div class="small-muted">Code (read-only): ${c.code}</div>
+    <div class="small-muted">Code (fixed, hidden from users): ${c.code}</div>
     <div style="display:flex;gap:6px;margin-top:4px;margin-bottom:4px;">
       <input id="cpDiscount" type="number" class="input" value="${c.discount}" style="flex:1;" />
       <label style="font-size:12px;"><input type="checkbox" id="cpEnabled" ${c.enabled?"checked":""}> Enabled</label>
@@ -752,7 +806,7 @@ function openAdminPanel(){
     <button id="admClose" class="btn ghost" style="width:100%;">Close Panel</button>
   `;
 
-  // Fill product list
+  // --- Fill product list with Sold button ---
   const listBox = document.getElementById("admProductList");
   listBox.innerHTML = "";
   Object.keys(state.products).forEach(cat=>{
@@ -762,36 +816,53 @@ function openAdminPanel(){
     listBox.appendChild(title);
 
     state.products[cat].forEach((p,idx)=>{
+      if (typeof p.sold !== "number") p.sold = 0;
       const row = document.createElement("div");
       row.style.cssText = "display:flex;gap:4px;align-items:center;margin:4px 0;font-size:12px;";
       row.innerHTML = `
-        <div style="flex:2;">${p.name}</div>
+        <div style="flex:2;">
+          ${p.name}<br>
+          <span class="small-muted">Sold: ${p.sold}</span>
+        </div>
         <input data-cat="${cat}" data-idx="${idx}" data-field="price" class="input" type="number" value="${p.price}" style="flex:1;min-width:60px;">
         <input data-cat="${cat}" data-idx="${idx}" data-field="stock" class="input" type="number" value="${p.stock}" style="flex:1;min-width:60px;">
+        <button class="btn ghost admSold" data-cat="${cat}" data-idx="${idx}" style="flex:0 0 auto;font-size:11px;padding:4px 6px;">Sold</button>
       `;
       listBox.appendChild(row);
     });
   });
 
-  // Init toggles from state
+  // --- toggles initial ---
   document.getElementById("chkMaint").checked     = state.flags.maintenance;
   document.getElementById("chkFakePopup").checked = state.flags.fakePopup;
   document.getElementById("chkFakeRev").checked   = state.flags.fakeReviews;
 
-  // Add handlers
+  // --- handlers ---
+
+  // Add item with category (existing or new)
   document.getElementById("admAddItem").onclick = ()=>{
-    const cat   = document.getElementById("admCat").value;
+    let cat   = document.getElementById("admCat").value;
+    const newCatName = document.getElementById("admNewCat").value.trim();
     const name  = document.getElementById("admName").value.trim();
     const price = Number(document.getElementById("admPrice").value||0);
     const stock = Number(document.getElementById("admStock").value||0);
     if(!name || !price || !stock) return alert("Name, price, stock required");
-    state.products[cat].push({name,price,stock});
+
+    if(newCatName){
+      const key = newCatName.toLowerCase().replace(/\s+/g,"_");
+      if(!state.products[key]) state.products[key] = [];
+      if(state.visibility[key] === undefined) state.visibility[key] = true;
+      cat = key;
+    }
+
+    state.products[cat].push({name,price,stock,sold:0});
     saveState();
     renderProducts();
     showToast("Item added");
-    openAdminPanel(); // refresh
+    openAdminPanel(); // refresh panel
   };
 
+  // price & stock change
   listBox.querySelectorAll("input").forEach(inp=>{
     inp.addEventListener("change",e=>{
       const cat   = e.target.getAttribute("data-cat");
@@ -803,9 +874,28 @@ function openAdminPanel(){
       saveState();
       renderProducts();
       showToast("Updated "+field);
+      openAdminPanel(); // refresh list / sold label
     });
   });
 
+  // SOLD button: decrease stock, increase sold
+  listBox.querySelectorAll(".admSold").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      const cat = btn.getAttribute("data-cat");
+      const idx = Number(btn.getAttribute("data-idx"));
+      const item = state.products[cat] && state.products[cat][idx];
+      if(!item) return;
+      if(item.stock <= 0) return alert("No stock left!");
+      item.stock -= 1;
+      item.sold += 1;
+      saveState();
+      renderProducts();
+      showToast("Marked 1 unit sold");
+      openAdminPanel();
+    });
+  });
+
+  // announcement / auto stock
   document.getElementById("admAnnBtn").onclick = ()=>{
     const txt = document.getElementById("admAnn").value.trim();
     if(!txt) return alert("Write announcement");
@@ -829,7 +919,7 @@ function openAdminPanel(){
     refillStock(); showToast("Stock refilled");
   };
 
-  // Toggles
+  // toggles
   document.getElementById("chkMaint").onchange = e=>{
     state.flags.maintenance = e.target.checked;
     saveState();
@@ -849,7 +939,7 @@ function openAdminPanel(){
     showToast("Fake reviews: "+(state.flags.fakeReviews?"ON":"OFF"));
   };
 
-  // Coupon manager
+  // coupon
   document.getElementById("cpEnabled").onchange = e=>{
     state.coupon.enabled = e.target.checked;
     saveState();
@@ -873,7 +963,7 @@ function openAdminPanel(){
     };
   });
 
-  // Settings
+  // settings
   document.getElementById("admSaveSettings").onclick = ()=>{
     state.settings.amanPhone   = document.getElementById("setAman").value.trim()   || state.settings.amanPhone;
     state.settings.badboyPhone = document.getElementById("setBadboy").value.trim() || state.settings.badboyPhone;
@@ -884,7 +974,7 @@ function openAdminPanel(){
     showToast("Settings saved");
   };
 
-  // Visibility
+  // visibility (basic 5)
   document.querySelectorAll(".visCat").forEach(ch=>{
     ch.onchange = ()=>{
       const val = ch.value;
@@ -910,7 +1000,7 @@ function showToast(msg){
   setTimeout(()=>t.style.display="none",3000);
 }
 
-/* ============== EVENT DELEGATION FOR BUY/ADD ============== */
+/* ============== CLICK DELEGATION (BUY/ADD) ============== */
 
 document.addEventListener("click",e=>{
   if(e.target.classList.contains("add-btn")){
@@ -930,7 +1020,6 @@ document.addEventListener("click",e=>{
 /* ============== INIT ============== */
 
 function init(){
-  // update visible admin numbers
   document.getElementById("adminAman").textContent   = "+91 "+state.settings.amanPhone;
   document.getElementById("adminBadboy").textContent = "+91 "+state.settings.badboyPhone;
 
@@ -938,7 +1027,7 @@ function init(){
   renderReviews();
   renderAnnouncements();
   updateCart();
-  applyTelegramLock();
+  applyTelegramBadge();
   applyMaintenance();
   if(state.flags.fakePopup) startFakePopup();
 }
