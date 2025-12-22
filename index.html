@@ -1,733 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>AKA SHOP — Pro MAX (Simple)</title>
+  <meta charset="UTF-8" />
+  <title>Website Closed</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<style>
-:root{
-  --gold:#f7d66d;
-  --blue:#2aa7ff;
-  --dark:#06090e;
-  --panel:#0b1016;
-  --muted:#b0b6bf;
-}
-*{margin:0;padding:0;box-sizing:border-box;font-family:"Poppins",sans-serif}
-body{
-  background:radial-gradient(circle at 20% 20%,#0b1018,#020304);
-  color:white;
-  padding:16px;
-}
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
 
-/* HEADER */
-header{
-  display:flex;justify-content:space-between;align-items:center;
-  background:rgba(255,255,255,.05);
-  padding:12px 20px;border-radius:12px;
-  border:1px solid rgba(255,255,255,.1);
-  backdrop-filter:blur(8px);
-}
-h1{color:var(--gold);font-weight:900}
-.actions{display:flex;gap:8px}
+    body {
+      background: radial-gradient(circle at top, #1a1a1a, #000);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
 
-/* BUTTONS */
-.btn{
-  background:linear-gradient(45deg,var(--blue),var(--gold));
-  padding:8px 12px;border:none;
-  border-radius:10px;font-weight:800;
-  cursor:pointer;color:#000;
-}
-.ghost{
-  background:transparent;
-  border:1px solid rgba(255,255,255,.3);
-  color:var(--muted);
-}
+    .box {
+      max-width: 420px;
+      padding: 30px 22px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+    }
 
-/* TELEGRAM BUTTONS */
-.tg-btn{
-  background:linear-gradient(45deg,#2aa7ff,#1b9bef);
-  font-weight:900;color:#000;
-}
-.tg-float{
-  position:fixed;right:14px;bottom:80px;
-  background:linear-gradient(45deg,#2aa7ff,#1b9bef);
-  padding:12px 14px;border-radius:12px;
-  font-weight:900;color:#000;
-  box-shadow:0 12px 25px rgba(0,0,0,.4);
-  z-index:9999;
-}
+    .icon {
+      font-size: 52px;
+      margin-bottom: 15px;
+    }
 
-/* LAYOUT */
-main{max-width:760px;margin:16px auto 0;}
-aside{max-width:360px;margin:16px auto 0;}
-@media(min-width:1100px){
-  body{display:flex;gap:16px;justify-content:center;align-items:flex-start}
-  main{margin-top:16px}
-}
+    h1 {
+      font-size: 22px;
+      margin-bottom: 12px;
+      color: #ff4d4d;
+    }
 
-/* CARDS */
-.card{
-  background:rgba(255,255,255,.06);
-  border-radius:12px;padding:14px;
-  margin:10px 0;
-  border:1px solid rgba(255,255,255,.1);
-}
-.card h2{color:var(--gold);margin-bottom:6px}
+    p {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #ddd;
+      margin-bottom: 10px;
+    }
 
-/* GRID + PRODUCT */
-.grid{display:flex;flex-wrap:wrap;gap:10px}
-.box{
-  background:rgba(255,255,255,0.05);
-  border-radius:12px;padding:10px;
-  width:160px;text-align:center;
-  border:1px solid rgba(255,255,255,.1);
-}
-.price{color:var(--gold);font-weight:900;margin:6px 0}
-.small-muted{font-size:12px;color:var(--muted)}
+    .highlight {
+      color: #ffd54f;
+      font-weight: 600;
+    }
 
-/* REVIEWS */
-.review{
-  background:rgba(255,255,255,.05);
-  padding:8px;border-radius:10px;margin-bottom:6px;
-  border:1px solid rgba(255,255,255,.08);
-}
-.input{
-  width:100%;padding:8px;background:#070b12;
-  color:white;border-radius:8px;
-  border:1px solid rgba(255,255,255,.15);
-}
+    .date {
+      margin-top: 12px;
+      font-size: 13px;
+      color: #bbb;
+    }
 
-/* CART */
-#miniCart{
-  background:rgba(255,255,255,.05);
-  padding:10px;border-radius:10px;margin-bottom:8px;
-}
-
-/* BANNER */
-.banner{
-  display:none;margin:12px 0;padding:10px;
-  background:linear-gradient(90deg,var(--gold),var(--blue));
-  color:#000;font-weight:900;
-  border-radius:10px;
-  white-space:nowrap;
-  overflow:hidden;
-  animation:scroll 15s linear infinite;
-}
-@keyframes scroll{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
-
-/* TOAST */
-.toast{
-  position:fixed;bottom:22px;left:22px;
-  background:rgba(0,0,0,.8);
-  padding:12px 14px;border-radius:12px;
-  display:none;z-index:999999;color:white;
-}
-
-/* MODALS */
-.modal-back{
-  position:fixed;top:0;left:0;right:0;bottom:0;
-  background:rgba(0,0,0,.6);
-  display:none;justify-content:center;align-items:center;
-  z-index:1000000;
-}
-.modal{
-  background:linear-gradient(#0b1116,#071018);
-  padding:16px;border-radius:14px;
-  border:1px solid rgba(255,255,255,.1);
-  width:90%;max-width:520px;
-}
-
-/* MAINTENANCE OVERLAY */
-#maintenanceOverlay{
-  position:fixed;left:0;right:0;bottom:0;top:60px;
-  background:rgba(0,0,0,0.8);
-  z-index:900000;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:20px;
-}
-
-/* BADGE */
-#tgVerifiedBadge{
-  display:none;
-  margin-top:8px;
-  font-size:12px;
-  background:linear-gradient(90deg,var(--gold),var(--blue));
-  color:#000;padding:4px 8px;border-radius:10px;
-}
-</style>
+    .footer {
+      margin-top: 18px;
+      font-size: 12px;
+      color: #888;
+    }
+  </style>
 </head>
 <body>
-  <header>
-  <h1>AKA SHOP — Pro MAX</h1>
-  <div class="actions">
-    <button id="telegramBtn" class="btn tg-btn">🔷 Telegram</button>
-    <button id="loginBtn" class="btn">Admin Login</button>
-    <button id="cartBtn" class="btn ghost">🛒 Cart</button>
-  </div>
-</header>
 
-<button id="telegramFloating" class="tg-float">✦ Telegram</button>
+  <div class="box">
+    <div class="icon">🔒</div>
 
-<div id="banner" class="banner"></div>
-<div id="tgVerifiedBadge">✔ Telegram Verified</div>
-<div id="maintenanceOverlay">
-  <div>
-    <h2 style="color:var(--gold);margin-bottom:8px;">Maintenance Mode</h2>
-    <div class="small-muted">Shop temporarily paused by admin. Please try again later.</div>
-  </div>
-</div>
+    <h1>THIS PAGE IS PERMANENTLY CLOSED</h1>
 
-<!-- TELEGRAM POPUP -->
-<div id="tgModal" class="modal-back">
-  <div class="modal">
-    <h2 style="color:var(--gold);margin-bottom:10px;">Join Telegram Group</h2>
-    <p style="color:#ccc;">Join the group → enter your Telegram username → Badge show hoga (Buy lock nahi hoga).</p>
-    <input id="tgUsername" class="input" placeholder="@username" style="margin-top:10px">
-    <button id="tgOpenLink" class="btn" style="margin-top:10px;width:100%;">Open Telegram</button>
-    <button id="tgIJoined" class="btn" style="margin-top:10px;width:100%;">I Joined (Save)</button>
-    <button id="tgClose" class="btn ghost" style="margin-top:8px;width:100%;">Cancel</button>
-  </div>
-</div>
+    <p>
+      <span class="highlight">ADMIN – AMAN</span>  
+      is no longer involved in any selling activity or community services.
+    </p>
 
-<!-- ADMIN PANEL MODAL -->
-<div id="modalRoot" class="modal-back">
-  <div class="modal" id="modalInner"></div>
-</div>
+    <p>
+      All types of buying, selling, services, and offers on this website
+      have been <span class="highlight">permanently stopped</span>.
+    </p>
 
-<main>
-  <!-- KILLS -->
-  <section class="card" id="card-kills">
-    <h2>🔫 Kills</h2>
-    <div id="killsContainer" class="grid"></div>
-  </section>
+    <p>
+      Any <span class="highlight">advance payments</span> made earlier  
+      have been <span class="highlight">successfully refunded</span>.
+    </p>
 
-  <!-- GEMS -->
-  <section class="card" id="card-gems">
-    <h2>💎 Gems Monthly Pack</h2>
-    <div id="gemsContainer" class="grid"></div>
-    <div class="small-muted" style="margin-top:6px;">
-      How to Get Pass: Contact Admin → Payment → Screenshot → Account profile picture → Pass within 5–10 minutes.
+    <div class="date">
+      Website Closed On<br />
+      <span class="highlight">22 December 2025 – 02:20 PM</span>
     </div>
-  </section>
 
-  <!-- DIAMOND -->
-  <section class="card" id="card-diamond">
-    <h2>💠 Diamond Pass</h2>
-    <div id="diamondContainer" class="grid"></div>
-  </section>
-
-  <!-- RSS -->
-  <section class="card" id="card-rss">
-    <h2>📦 Recourse (RSS)</h2>
-    <div id="rssContainer" class="grid"></div>
-    <div class="small-muted" style="margin-top:6px;">Kingdom Till 1700 — Last Available</div>
-  </section>
-
-  <!-- ACCOUNTS (NO BUY BUTTONS) -->
-  <section class="card" id="card-accounts">
-    <h2>🧾 Account Sell</h2>
-    <div id="accountsContainer" class="grid"></div>
-    <div class="small-muted" style="margin-top:6px;">We have sold <b>477+</b> accounts. Stock currently: <b>300</b>.</div>
-  </section>
-
-  <!-- ANNOUNCEMENTS -->
-  <section class="card">
-    <h2>📢 Announcements</h2>
-    <div id="announcementFeed" class="small-muted">No announcements yet.</div>
-  </section>
-
-  <!-- REVIEWS -->
-  <section class="card">
-    <h2>⭐ Reviews • 7K+</</h2>
-    <div id="reviewCarousel"></div>
-    <textarea id="reviewText" class="input" rows="3" placeholder="Write a review..."></textarea>
-    <div style="margin-top:8px;display:flex;gap:8px;">
-      <button id="submitReview" class="btn">Submit Review</button>
-      <button id="clearReviews" class="btn ghost">Clear Reviews (Admin)</button>
-    </div>
-  </section>
-</main>
-
-<aside>
-  <div class="card">
-    <h2>🛒 Cart</h2>
-    <div id="miniCart">No items yet</div>
-    <div style="margin-top:8px;display:flex;gap:8px;">
-      <button id="viewCart" class="btn">Open Cart</button>
-      <button id="checkoutBtn" class="btn" style="background:#25d366;">Checkout</button>
-    </div>
-    <div class="small-muted" style="margin-top:10px;">Contact Admins</div>
-    <div style="margin-top:6px;">
-      <div style="font-weight:900">ADMIN (AMAN)</div>
-      <div class="small-muted" id="adminAman">+91 7980590451</div>
-      <div style="height:6px;"></div>
-      <div style="font-weight:900">ADMIN (BAD BOY)</div>
-      <div class="small-muted" id="adminBadboy">+91 9518445112</div>
+    <div class="footer">
+      © This website is no longer active
     </div>
   </div>
 
-  <div class="card">
-    <h2>Trusted</h2>
-    <div style="font-weight:900;color:var(--gold);">★★★★★</div>
-    <div class="small-muted">7K+ Reviews • Instant Delivery</div>
-  </div>
-</aside>
-
-<div id="toastBox" class="toast"></div>
-<script>
-const ADMIN_ID   = "AKASHOPADMIN";
-const ADMIN_PASS = "AKASHOP2021";
-
-const STORE      = "aka_shop_simple_v1";
-const TG_STORE   = "aka_tg_verified";
-
-let state = JSON.parse(localStorage.getItem(STORE) || "null");
-if (!state) state = {};
-
-// =========== INITIAL DATA ===========
-if (!state.products) {
-  state.products = {
-    kills: [
-      { name:"1B Kills", price:1050, stock:12, sold:0 }
-    ],
-    gems: [
-      { name:"Gold Pass (599→270)",   price:270, stock:12, sold:0 },
-      { name:"Silver Pass (299→120)", price:120, stock:12, sold:0 },
-      { name:"Both Pass (400→380)",   price:380, stock:12, sold:0 }
-    ],
-    diamond: [
-      { name:"1 Month Diamond Pass (1880→1820)", price:1820, stock:12, sold:0 },
-      { name:"7 Day Diamond Pass", price:190, stock:12, sold:0 }
-    ],
-    rss: [
-      { name:"44444B RSS", price:130, stock:12, sold:0 },
-      { name:"44442B RSS", price:120, stock:12, sold:0 },
-      { name:"44440B RSS", price:110, stock:12, sold:0 },
-      { name:"33333B RSS", price:120, stock:12, sold:0 },
-      { name:"22222B RSS", price:110, stock:12, sold:0 },
-      { name:"22221B RSS", price:100, stock:12, sold:0 },
-      { name:"22220B RSS", price:90,  stock:12, sold:0 },
-      { name:"11111B RSS", price:80,  stock:12, sold:0 },
-      { name:"11110B RSS", price:80,  stock:12, sold:0 },
-      { name:"4B Food Only", price:80, stock:12, sold:0 }
-    ],
-    accounts: [
-      { name:"Mini Account Sell",      price:300,  stock:12, sold:0 },
-      { name:"Filler Account Sell",    price:450,  stock:12, sold:0 },
-      { name:"Semi Lead Account Sell", price:900,  stock:12, sold:0 },
-      { name:"Lead Account Sell",      price:1500, stock:12, sold:0 },
-      { name:"Titan Account Sell",     price:3500, stock:12, sold:0 },
-      { name:"Emperor Account Sell",   price:8000, stock:12, sold:0 }
-    ]
-  };
-}
-if (!state.reviews)       state.reviews       = [];
-if (!state.announcements) state.announcements = [];
-if (!state.maintenance)   state.maintenance   = false;
-if (!state.settings) {
-  state.settings = {
-    amanPhone:"7980590451",
-    badboyPhone:"9518445112",
-    telegram:"https://t.me/+YHw-d8Pp5A0xNzRl"
-  };
-}
-
-saveState();
-function saveState(){
-  localStorage.setItem(STORE, JSON.stringify(state));
-}
-
-// =========== RENDER PRODUCTS ===========
-const categoryConfig = {
-  kills:   {containerId:"killsContainer",   buyable:true},
-  gems:    {containerId:"gemsContainer",    buyable:true},
-  diamond: {containerId:"diamondContainer", buyable:true},
-  rss:     {containerId:"rssContainer",     buyable:true},
-  accounts:{containerId:"accountsContainer",buyable:false}
-};
-
-function renderProducts(){
-  Object.keys(state.products).forEach(cat=>{
-    const cfg = categoryConfig[cat];
-    // new category support
-    let containerId;
-    if (cfg) {
-      containerId = cfg.containerId;
-    } else {
-      const secId = "card-" + cat;
-      let sec = document.getElementById(secId);
-      if (!sec) {
-        const main = document.querySelector("main");
-        sec = document.createElement("section");
-        sec.className="card";
-        sec.id=secId;
-        const pretty = cat.replace(/_/g," ").replace(/\b\w/g,c=>c.toUpperCase());
-        sec.innerHTML = `<h2>${pretty}</h2><div id="${cat}Container" class="grid"></div>`;
-        main.appendChild(sec);
-      }
-      containerId = cat+"Container";
-    }
-    const list = state.products[cat];
-    const box = document.getElementById(containerId);
-    if (!box) return;
-    box.innerHTML = "";
-    if (cat === "accounts" && cfg && !cfg.buyable) {
-      list.forEach(p=>{
-        const el = document.createElement("div");
-        el.className="box";
-        el.innerHTML = `<div>${p.name}</div><div class="small-muted">Contact admin for full details.</div>`;
-        box.appendChild(el);
-      });
-    } else {
-      list.forEach((p,i)=>{
-        const el = document.createElement("div");
-        el.className="box";
-        el.innerHTML = `
-          <div>${p.name}</div>
-          <div class="price">₹${p.price}</div>
-          <div style="margin-bottom:6px;color:#ccc">Stock: ${p.stock}</div>
-          <button class="btn buy-btn" data-cat="${cat}" data-index="${i}">Buy</button>
-          <button class="btn ghost add-btn" data-cat="${cat}" data-index="${i}">Add</button>
-        `;
-        box.appendChild(el);
-      });
-    }
-  });
-}
-
-// =========== CART ===========
-let cart = [];
-function addToCart(cat,index){
-  const item = state.products[cat][index];
-  if (!item) return;
-  if (item.stock<=0) return alert("Out of stock!");
-  cart.push({cat:cat,name:item.name,price:item.price});
-  updateCart();
-}
-function updateCart(){
-  const box = document.getElementById("miniCart");
-  if (!box) return;
-  if (cart.length===0) {
-    box.innerHTML="No items yet";
-    return;
-  }
-  const total = cart.reduce((s,x)=>s+x.price,0);
-  box.innerHTML = cart.map(x=>`${x.name} - ₹${x.price}`).join("<br>") +
-    `<br><b>Total:</b> ₹${total}`;
-}
-
-// =========== BUY NOW ===========
-function buyNow(cat,index){
-  const item = state.products[cat][index];
-  if (!item) return;
-  const isAman = confirm("OK = ADMIN (AMAN)\nCancel = ADMIN (BAD BOY)");
-  const phone = isAman ? state.settings.amanPhone : state.settings.badboyPhone;
-  const msg = `Hello, I want to buy ${item.name} (₹${item.price})`;
-  window.open(`https://wa.me/91${phone}?text=${encodeURIComponent(msg)}`,"_blank");
-}
-
-// =========== CHECKOUT ===========
-document.getElementById("checkoutBtn").onclick = ()=>{
-  if (cart.length===0) return alert("Cart is empty!");
-  if (state.maintenance) return alert("Shop in maintenance mode.");
-  const subtotal = cart.reduce((s,x)=>s+x.price,0);
-  const total = subtotal; // simple: no coupon for now
-  const isAman = confirm("OK = ADMIN (AMAN)\nCancel = ADMIN (BAD BOY)");
-  const phone = isAman ? state.settings.amanPhone : state.settings.badboyPhone;
-  const msg = `New order from AKA SHOP:\n` +
-    cart.map(x=>`- ${x.name} (₹${x.price})`).join("\n") +
-    `\nTotal: ₹${total}`;
-  window.open(`https://wa.me/91${phone}?text=${encodeURIComponent(msg)}`,"_blank");
-  cart = [];
-  updateCart();
-};
-
-// =========== REVIEWS ===========
-const fakeReviews = [
-  "Very fast delivery 🔥",
-  "Trusted seller ⭐⭐⭐⭐⭐",
-  "Great behaviour 👑",
-  "Super fast gems pass 💎",
-  "Best price and support ❤️",
-  "Instant delivery 🔥🔥",
-  "Highly recommended ⭐"
-];
-function renderReviews(){
-  const box = document.getElementById("reviewCarousel");
-  if (!box) return;
-  box.innerHTML="";
-  const arr = [...fakeReviews,...state.reviews];
-  arr.forEach(t=>{
-    const div = document.createElement("div");
-    div.className="review";
-    div.innerHTML = `<b>★★★★★</b> — ${t}`;
-    box.appendChild(div);
-  });
-}
-document.getElementById("submitReview").onclick = ()=>{
-  const t = document.getElementById("reviewText");
-  const val = t.value.trim();
-  if (!val) return alert("Write a review first");
-  state.reviews.unshift(val);
-  saveState();
-  renderReviews();
-  t.value="";
-};
-document.getElementById("clearReviews").onclick = ()=>{
-  const id = prompt("Admin ID:");
-  const pw = prompt("Password:");
-  if (id!==ADMIN_ID || pw!==ADMIN_PASS) return alert("Wrong login");
-  if (!confirm("Clear user reviews?")) return;
-  state.reviews=[];
-  saveState();
-  renderReviews();
-};
-
-// =========== ANNOUNCEMENTS ===========
-function renderAnnouncements(){
-  const feed = document.getElementById("announcementFeed");
-  const banner = document.getElementById("banner");
-  if (!state.announcements.length){
-    feed.innerHTML = "No announcements yet.";
-    banner.style.display="none";
-  } else {
-    feed.innerHTML = state.announcements.map(a=>"• "+a).join("<br>");
-    banner.style.display="block";
-    banner.textContent = state.announcements[0];
-  }
-}
-
-// =========== TELEGRAM (badge only) ===========
-function applyTelegramBadge(){
-  const v = JSON.parse(localStorage.getItem(TG_STORE) || "null");
-  const badge = document.getElementById("tgVerifiedBadge");
-  if (v && badge){
-    badge.style.display="inline-block";
-    badge.textContent = `✔ Telegram Verified (${v.username})`;
-  } else if (badge){
-    badge.style.display="none";
-  }
-}
-function openTgModal(){ document.getElementById("tgModal").style.display="flex"; }
-function closeTgModal(){ document.getElementById("tgModal").style.display="none"; }
-
-document.getElementById("telegramBtn").onclick = openTgModal;
-document.getElementById("telegramFloating").onclick = openTgModal;
-
-document.getElementById("tgOpenLink").onclick = ()=>{
-  window.open(state.settings.telegram,"_blank");
-};
-document.getElementById("tgIJoined").onclick = ()=>{
-  const u = document.getElementById("tgUsername").value.trim();
-  if (!u) return alert("Enter Telegram username (@...)");
-  localStorage.setItem(TG_STORE, JSON.stringify({username:u}));
-  closeTgModal();
-  applyTelegramBadge();
-};
-document.getElementById("tgClose").onclick = closeTgModal;
-
-// =========== MAINTENANCE ===========
-function applyMaintenance(){
-  const o = document.getElementById("maintenanceOverlay");
-  o.style.display = state.maintenance ? "flex" : "none";
-}
-
-// =========== FAKE PURCHASE POPUP ===========
-const fakeNames = ["Aman","Priya","Sara","Liam","Yuki","Riya","Noah","Alex"];
-setInterval(()=>{
-  const t = document.getElementById("toastBox");
-  if (!t) return;
-  const name = fakeNames[Math.floor(Math.random()*fakeNames.length)];
-  t.textContent = `${name} just purchased from AKA SHOP 🔥`;
-  t.style.display="block";
-  setTimeout(()=>t.style.display="none",3000);
-},20000);
-
-// =========== TOAST (for admin panel) ===========
-function showToast(msg){
-  const t = document.getElementById("toastBox");
-  if (!t) return;
-  t.textContent=msg;
-  t.style.display="block";
-  setTimeout(()=>t.style.display="none",2000);
-}
-
-// =========== ADMIN LOGIN + PANEL ===========
-document.getElementById("loginBtn").onclick = ()=>{
-  const id = prompt("Admin ID:");
-  const pw = prompt("Password:");
-  if (id!==ADMIN_ID || pw!==ADMIN_PASS) return alert("Wrong login");
-  openAdminPanel();
-};
-
-function openAdminPanel(){
-  const root = document.getElementById("modalRoot");
-  const inner= document.getElementById("modalInner");
-  root.style.display="flex";
-
-  inner.innerHTML = `
-    <h2 style="color:var(--gold);margin-bottom:6px;">Admin Panel</h2>
-    <div class="small-muted" style="margin-bottom:8px;">Add items, change price/stock, mark sold, announcement, maintenance.</div>
-
-    <h3 style="font-size:14px;color:var(--gold);margin-bottom:4px;">➕ Add New Category / Item</h3>
-    <div class="small-muted" style="margin-bottom:4px;">Choose existing OR type new category name.</div>
-    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px;">
-      <select id="admCat" class="input" style="flex:1;min-width:120px;">
-        <option value="kills">Kills</option>
-        <option value="gems">Gems</option>
-        <option value="diamond">Diamond</option>
-        <option value="rss">RSS</option>
-        <option value="accounts">Accounts</option>
-      </select>
-      <input id="admNewCat" class="input" placeholder="New category (optional)" style="flex:1;min-width:120px;">
-      <input id="admName" class="input" placeholder="Item name" style="flex:2;min-width:150px;">
-      <input id="admPrice" type="number" class="input" placeholder="Price" style="flex:1;min-width:80px;">
-      <input id="admStock" type="number" class="input" placeholder="Stock" style="flex:1;min-width:80px;">
-    </div>
-    <button id="admAddItem" class="btn" style="width:100%;margin-bottom:8px;">Add Item</button>
-
-    <h3 style="font-size:14px;color:var(--gold);margin:4px 0;">📦 Edit Products</h3>
-    <div id="admProductList" style="max-height:200px;overflow:auto;border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:4px;margin-bottom:8px;"></div>
-
-    <h3 style="font-size:14px;color:var(--gold);margin:4px 0;">📢 Announcement</h3>
-    <textarea id="admAnn" class="input" placeholder="New announcement..."></textarea>
-    <div style="display:flex;gap:6px;margin-top:6px;margin-bottom:6px;">
-      <button id="admAnnBtn" class="btn" style="flex:1;">Add Announcement</button>
-      <label style="flex:1;font-size:12px;display:flex;align-items:center;gap:4px;">
-        <input type="checkbox" id="admMaint"> Maintenance Mode
-      </label>
-    </div>
-
-    <button id="admClose" class="btn ghost" style="width:100%;">Close</button>
-  `;
-
-  // Fill product list
-  const listBox = document.getElementById("admProductList");
-  listBox.innerHTML="";
-  Object.keys(state.products).forEach(cat=>{
-    const title = document.createElement("div");
-    title.style.cssText="font-weight:900;color:var(--gold);margin-top:4px;";
-    title.textContent = cat.toUpperCase();
-    listBox.appendChild(title);
-
-    state.products[cat].forEach((p,idx)=>{
-      if (typeof p.sold!=="number") p.sold=0;
-      const row = document.createElement("div");
-      row.style.cssText="display:flex;gap:4px;align-items:center;margin:4px 0;font-size:12px;";
-      row.innerHTML = `
-        <div style="flex:2;">
-          ${p.name}<br><span class="small-muted">Sold: ${p.sold}</span>
-        </div>
-        <input data-cat="${cat}" data-idx="${idx}" data-field="price" class="input" type="number" value="${p.price}" style="flex:1;min-width:60px;">
-        <input data-cat="${cat}" data-idx="${idx}" data-field="stock" class="input" type="number" value="${p.stock}" style="flex:1;min-width:60px;">
-        <button class="btn ghost admSold" data-cat="${cat}" data-idx="${idx}" style="flex:0 0 auto;font-size:11px;padding:4px 6px;">Sold</button>
-      `;
-      listBox.appendChild(row);
-    });
-  });
-
-  document.getElementById("admMaint").checked = state.maintenance;
-
-  // handlers
-  document.getElementById("admAddItem").onclick = ()=>{
-    let cat = document.getElementById("admCat").value;
-    const newCat = document.getElementById("admNewCat").value.trim();
-    const name   = document.getElementById("admName").value.trim();
-    const price  = Number(document.getElementById("admPrice").value||0);
-    const stock  = Number(document.getElementById("admStock").value||0);
-    if (!name || !price || !stock) return alert("Name, price, stock required");
-
-    if (newCat){
-      const key = newCat.toLowerCase().replace(/\s+/g,"_");
-      if (!state.products[key]) state.products[key]=[];
-      cat = key;
-    }
-    state.products[cat].push({name,price,stock,sold:0});
-    saveState();
-    renderProducts();
-    showToast("Item added");
-    openAdminPanel(); // re-open fresh
-  };
-
-  listBox.querySelectorAll("input").forEach(inp=>{
-    inp.addEventListener("change",e=>{
-      const cat = e.target.getAttribute("data-cat");
-      const idx = Number(e.target.getAttribute("data-idx"));
-      const field=e.target.getAttribute("data-field");
-      const val  = Number(e.target.value||0);
-      state.products[cat][idx][field]=val;
-      saveState();
-      renderProducts();
-      openAdminPanel();
-    });
-  });
-
-  listBox.querySelectorAll(".admSold").forEach(btn=>{
-    btn.addEventListener("click",()=>{
-      const cat = btn.getAttribute("data-cat");
-      const idx = Number(btn.getAttribute("data-idx"));
-      const it  = state.products[cat][idx];
-      if (!it) return;
-      if (it.stock<=0) return alert("No stock left!");
-      it.stock-=1;
-      it.sold+=1;
-      saveState();
-      renderProducts();
-      openAdminPanel();
-    });
-  });
-
-  document.getElementById("admAnnBtn").onclick = ()=>{
-    const txt = document.getElementById("admAnn").value.trim();
-    if (!txt) return alert("Write announcement");
-    state.announcements.unshift(txt);
-    saveState();
-    renderAnnouncements();
-    showToast("Announcement added");
-  };
-
-  document.getElementById("admMaint").onchange = e=>{
-    state.maintenance = e.target.checked;
-    saveState();
-    applyMaintenance();
-  };
-
-  document.getElementById("admClose").onclick = ()=> root.style.display="none";
-  root.onclick = e=>{ if (e.target.id==="modalRoot") root.style.display="none"; };
-}
-
-// =========== CLICK HANDLERS (BUY / ADD) ===========
-document.addEventListener("click",e=>{
-  if (e.target.classList.contains("add-btn")){
-    if (state.maintenance) return alert("Shop in maintenance.");
-    const cat = e.target.getAttribute("data-cat");
-    const idx = Number(e.target.getAttribute("data-index"));
-    addToCart(cat,idx);
-  }
-  if (e.target.classList.contains("buy-btn")){
-    if (state.maintenance) return alert("Shop in maintenance.");
-    const cat = e.target.getAttribute("data-cat");
-    const idx = Number(e.target.getAttribute("data-index"));
-    buyNow(cat,idx);
-  }
-});
-
-// =========== INIT ===========
-function init(){
-  document.getElementById("adminAman").textContent   = "+91 "+state.settings.amanPhone;
-  document.getElementById("adminBadboy").textContent = "+91 "+state.settings.badboyPhone;
-  renderProducts();
-  renderReviews();
-  renderAnnouncements();
-  updateCart();
-  applyTelegramBadge();
-  applyMaintenance();
-}
-init();
-</script>
 </body>
 </html>
